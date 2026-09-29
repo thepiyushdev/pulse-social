@@ -3,375 +3,389 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Pulse — WhatsApp Style Social & Chat</title>
+  <title>WhatsApp</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
-    .story-ring { background: linear-gradient(45deg, #EC4899, #FACC15, #3B82F6); }
-    .chat-bg { background-color: #F8FAFC; background-image: radial-gradient(#E2E8F0 1px, transparent 1px); background-size: 20px 20px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    ::-webkit-scrollbar { width: 0px; height: 0px; }
+    .wa-bg { background-color: #0b141a; }
+    .wa-surface { background-color: #111b21; }
+    .wa-input { background-color: #202c33; }
+    .wa-border { border-color: #222d34; }
+    .wa-green { color: #00a884; }
+    .wa-bg-green { background-color: #00a884; }
+    .wa-chat-pattern {
+      background-color: #0b141a;
+      background-image: radial-gradient(#182229 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
   </style>
 </head>
-<body class="bg-[#F1F5F9] text-slate-800 min-h-screen flex flex-col items-center">
+<body class="wa-bg text-[#e9edef] min-h-screen flex flex-col items-center justify-between select-none overflow-x-hidden">
 
   <!-- AUTH SCREEN -->
-  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 w-full bg-gradient-to-br from-pink-50 via-sky-50 to-yellow-50">
-    <div class="bg-white/90 backdrop-blur-xl border border-white/60 p-8 rounded-3xl w-full max-w-sm shadow-xl shadow-pink-500/5 relative">
-      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-pink-500 via-rose-400 to-yellow-400 flex items-center justify-center text-white text-2xl shadow-lg shadow-pink-500/30 mb-4 mx-auto">
-        💬
+  <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 w-full wa-bg">
+    <div class="wa-surface border wa-border p-7 rounded-3xl w-full max-w-sm shadow-2xl">
+      <div class="flex flex-col items-center mb-6">
+        <div class="w-14 h-14 rounded-full wa-bg-green flex items-center justify-center text-white text-3xl shadow-lg mb-3">
+          💬
+        </div>
+        <h1 class="text-xl font-bold text-white tracking-tight">WhatsApp Login</h1>
+        <p class="text-xs text-[#8696a0] mt-1">Apna account enter karo</p>
       </div>
-      <h1 class="text-2xl font-black text-center text-slate-800 tracking-tight">Pulse<span class="text-pink-500">.</span></h1>
-      <p class="text-xs text-center text-slate-500 mb-6 font-medium">Connect, Chat & Share Moments</p>
 
       <div class="space-y-3">
-        <div>
-          <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Email Address</label>
-          <input id="authEmail" type="email" placeholder="you@gmail.com" class="mt-1 w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:border-pink-500 focus:bg-white text-slate-800 transition" />
-        </div>
-        <div>
-          <label class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Password</label>
-          <input id="authPass" type="password" placeholder="••••••••" class="mt-1 w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:border-pink-500 focus:bg-white text-slate-800 transition" />
-        </div>
+        <input id="authEmail" type="email" placeholder="Gmail / Email" class="w-full px-4 py-3 wa-input border wa-border rounded-xl text-sm outline-none text-[#e9edef] focus:border-[#00a884]" />
+        <input id="authPass" type="password" placeholder="Password" class="w-full px-4 py-3 wa-input border wa-border rounded-xl text-sm outline-none text-[#e9edef] focus:border-[#00a884]" />
       </div>
 
-      <div class="flex gap-2.5 mt-6">
-        <button onclick="handleAuth('login')" class="flex-1 py-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-2xl font-bold text-sm shadow-lg shadow-pink-500/25 transition">Log In</button>
-        <button onclick="handleAuth('signup')" class="flex-1 py-3 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-2xl font-bold text-sm transition">Sign Up</button>
+      <div class="flex gap-2.5 mt-5">
+        <button onclick="handleAuth('login')" class="flex-1 py-3 wa-bg-green hover:bg-[#02906f] text-[#111b21] rounded-xl font-bold text-sm transition">Log In</button>
+        <button onclick="handleAuth('signup')" class="flex-1 py-3 wa-input hover:bg-[#2a3942] border wa-border text-white rounded-xl font-bold text-sm transition">Sign Up</button>
       </div>
-      <p id="authMsg" class="text-xs text-center mt-3 text-pink-600 min-h-[16px] font-medium"></p>
+      <p id="authMsg" class="text-xs text-center mt-3 text-rose-400 min-h-[16px]"></p>
     </div>
   </div>
 
   <!-- MAIN APP WRAPPER -->
-  <div id="mainApp" class="hidden w-full max-w-4xl flex-1 flex flex-col min-h-screen bg-white shadow-2xl border-x border-slate-200">
-    
-    <!-- TOP HEADER -->
-    <header class="w-full bg-white/95 backdrop-blur-md px-4 py-3 border-b border-slate-100 flex items-center justify-between sticky top-0 z-30">
-      <div class="flex items-center gap-3">
-        <div onclick="openProfileModal()" class="cursor-pointer relative">
-          <div id="headerAvatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-500 to-yellow-400 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-pink-500/20">
-            U
-          </div>
-          <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span>
+  <div id="mainApp" class="hidden w-full max-w-md flex-1 flex flex-col min-h-screen wa-bg border-x wa-border relative">
+
+    <!-- ================= VIEW: CHATS ================= -->
+    <div id="tabContentChats" class="flex-1 flex flex-col pb-20">
+      <!-- WhatsApp Top Bar -->
+      <header class="px-4 py-3 flex items-center justify-between sticky top-0 wa-bg z-20">
+        <h1 class="text-xl font-bold text-[#e9edef] tracking-wide">WhatsApp</h1>
+        <div class="flex items-center gap-5 text-[#aebac1] text-lg">
+          <button onclick="openAddStatusModal()" title="Camera">📷</button>
+          <button onclick="focusSearch()" title="Search">🔍</button>
+          <button onclick="toggleMenu()" title="More options" class="relative">
+            ⋮
+            <div id="moreMenu" class="hidden absolute right-0 mt-2 w-44 wa-surface border wa-border rounded-xl shadow-2xl py-2 text-xs text-[#d1d7db] z-30">
+              <button onclick="openProfileModal()" class="w-full text-left px-4 py-2 hover:bg-[#202c33]">Profile & Bio</button>
+              <button onclick="openNewChatModal()" class="w-full text-left px-4 py-2 hover:bg-[#202c33]">New Chat / Contact</button>
+              <button onclick="openCreateGroupModal()" class="w-full text-left px-4 py-2 hover:bg-[#202c33]">New Group</button>
+              <button onclick="logout()" class="w-full text-left px-4 py-2 hover:bg-[#202c33] text-rose-400">Log out</button>
+            </div>
+          </button>
         </div>
-        <div>
-          <div class="flex items-center gap-1.5">
-            <h1 class="font-extrabold text-slate-900 text-lg tracking-tight">Pulse</h1>
-            <span class="px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-yellow-100 text-yellow-800 rounded-md">Live</span>
-          </div>
-          <p id="headerUsername" class="text-xs text-slate-500 font-semibold">@user</p>
+      </header>
+
+      <!-- Rounded Search Pill -->
+      <div class="px-4 py-1.5">
+        <div class="wa-input rounded-full px-4 py-2 flex items-center gap-3 text-[#8696a0]">
+          <span class="text-sm">🔍</span>
+          <input id="mainSearchInput" oninput="filterChatList()" type="text" placeholder="Search..." class="bg-transparent text-sm w-full outline-none text-[#d1d7db] placeholder-[#8696a0]" />
         </div>
       </div>
 
+      <!-- Chats List -->
+      <div id="chatsListContainer" class="flex-1 overflow-y-auto divide-y divide-[#202c33]/40 mt-1"></div>
+    </div>
+
+    <!-- ================= VIEW: UPDATES (STATUS & CHANNELS) ================= -->
+    <div id="tabContentUpdates" class="hidden flex-1 flex flex-col pb-20 overflow-y-auto">
+      <header class="px-4 py-3 flex items-center justify-between sticky top-0 wa-bg z-20">
+        <h1 class="text-xl font-bold text-[#e9edef]">Updates</h1>
+        <div class="flex items-center gap-5 text-[#aebac1] text-lg">
+          <button onclick="openAddStatusModal()">📷</button>
+          <button onclick="focusSearch()">🔍</button>
+          <button onclick="toggleMenu()">⋮</button>
+        </div>
+      </header>
+
+      <div class="p-4">
+        <h2 class="text-base font-bold text-white mb-3">Status</h2>
+
+        <!-- Horizontal Status Cards Tray -->
+        <div class="flex items-center gap-3 overflow-x-auto pb-2">
+          <!-- Add Status Card -->
+          <div onclick="openAddStatusModal()" class="w-24 h-36 rounded-2xl wa-surface border wa-border flex flex-col justify-between p-2.5 flex-shrink-0 cursor-pointer relative overflow-hidden">
+            <div class="w-9 h-9 rounded-full bg-[#202c33] flex items-center justify-center text-white text-base">
+              👤
+            </div>
+            <div class="absolute top-8 left-8 w-5 h-5 wa-bg-green rounded-full flex items-center justify-center text-white text-xs font-bold border-2 border-[#111b21]">
+              +
+            </div>
+            <div>
+              <p class="text-xs font-bold text-white">Add status</p>
+            </div>
+          </div>
+
+          <!-- Dynamic Status Stories -->
+          <div id="statusCardsContainer" class="flex gap-3"></div>
+        </div>
+
+        <!-- Channels Header -->
+        <div class="mt-6 flex items-center justify-between">
+          <h2 class="text-base font-bold text-white">Channels</h2>
+          <button onclick="openCreateGroupModal('channel')" class="text-xs wa-green font-bold bg-[#202c33] px-3 py-1.5 rounded-full">Explore</button>
+        </div>
+        <p class="text-xs text-[#8696a0] mt-1 mb-3">Stay updated on topics you care about</p>
+
+        <!-- Channels List -->
+        <div id="channelsListContainer" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW: CALLS ================= -->
+    <div id="tabContentCalls" class="hidden flex-1 flex flex-col pb-20 overflow-y-auto">
+      <header class="px-4 py-3 flex items-center justify-between sticky top-0 wa-bg z-20">
+        <h1 class="text-xl font-bold text-[#e9edef]">Calls</h1>
+        <div class="flex items-center gap-5 text-[#aebac1] text-lg">
+          <button onclick="openNewChatModal()">🔍</button>
+          <button onclick="toggleMenu()">⋮</button>
+        </div>
+      </header>
+      <div class="p-4">
+        <h3 class="text-xs font-bold text-[#8696a0] uppercase tracking-wider mb-3">Recent Calls</h3>
+        <div id="callsListContainer" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- ================= VIEW: TOOLS ================= -->
+    <div id="tabContentTools" class="hidden flex-1 flex flex-col pb-20 p-4">
+      <header class="py-2 mb-4 border-b wa-border">
+        <h1 class="text-xl font-bold text-[#e9edef]">Business Tools</h1>
+      </header>
+      <div class="space-y-3 text-sm text-[#d1d7db]">
+        <div onclick="openProfileModal()" class="p-3.5 wa-surface rounded-2xl flex items-center justify-between border wa-border cursor-pointer">
+          <div>
+            <h4 class="font-bold text-white">Business Profile</h4>
+            <p class="text-xs text-[#8696a0]">Manage name, DP, and bio</p>
+          </div>
+          <span>➔</span>
+        </div>
+        <div onclick="openFriendRequestsModal()" class="p-3.5 wa-surface rounded-2xl flex items-center justify-between border wa-border cursor-pointer">
+          <div>
+            <h4 class="font-bold text-white">Pending Requests</h4>
+            <p class="text-xs text-[#8696a0]">Friend & chat invites</p>
+          </div>
+          <span id="toolsReqBadge" class="hidden text-xs bg-rose-500 text-white px-2 py-0.5 rounded-full font-bold">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOATING ACTION BUTTON (Android WhatsApp Pill) -->
+    <button id="mainFab" onclick="handleFabClick()" class="fixed bottom-20 right-4 md:right-[calc(50%-200px)] w-14 h-14 bg-white hover:bg-slate-200 text-black rounded-2xl flex items-center justify-center text-xl shadow-2xl z-30 transition">
+      💬
+    </button>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 w-full max-w-md wa-bg border-t wa-border flex items-center justify-around py-2.5 z-30">
+      <button id="navBtnChats" onclick="switchTab('chats')" class="flex flex-col items-center gap-1 text-[#e9edef]">
+        <div class="px-4 py-1 rounded-full wa-input text-base">💬</div>
+        <span class="text-[11px] font-bold">Chats</span>
+      </button>
+
+      <button id="navBtnCalls" onclick="switchTab('calls')" class="flex flex-col items-center gap-1 text-[#8696a0]">
+        <div class="px-4 py-1 rounded-full text-base">📞</div>
+        <span class="text-[11px] font-semibold">Calls</span>
+      </button>
+
+      <button id="navBtnUpdates" onclick="switchTab('updates')" class="flex flex-col items-center gap-1 text-[#8696a0] relative">
+        <div class="px-4 py-1 rounded-full text-base">⭕</div>
+        <span class="text-[11px] font-semibold">Updates</span>
+        <span id="updatesDot" class="w-1.5 h-1.5 rounded-full wa-bg-green absolute top-1 right-5 hidden"></span>
+      </button>
+
+      <button id="navBtnTools" onclick="switchTab('tools')" class="flex flex-col items-center gap-1 text-[#8696a0]">
+        <div class="px-4 py-1 rounded-full text-base">🏪</div>
+        <span class="text-[11px] font-semibold">Tools</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ================= FULLSCREEN ACTIVE CONVERSATION SCREEN ================= -->
+  <div id="conversationScreen" class="hidden fixed inset-0 wa-bg z-40 flex flex-col w-full max-w-md mx-auto">
+    <!-- Chat Header -->
+    <header class="px-3 py-2 wa-surface border-b wa-border flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <!-- Notifications / Friend Requests Bell -->
-        <button onclick="toggleRequestsDrawer()" class="relative p-2.5 bg-slate-100 hover:bg-pink-50 hover:text-pink-600 text-slate-600 rounded-2xl transition">
-          🔔
-          <span id="requestsBadge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-pink-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center border-2 border-white">0</span>
-        </button>
-
-        <!-- New Group / Channel -->
-        <button onclick="openNewGroupModal()" class="p-2.5 bg-slate-100 hover:bg-sky-50 hover:text-sky-600 text-slate-600 rounded-2xl transition" title="New Group/Channel">
-          ➕
-        </button>
-
-        <!-- Logout -->
-        <button onclick="logout()" class="p-2.5 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-600 rounded-2xl transition" title="Log Out">
-          🚪
-        </button>
+        <button onclick="closeConversation()" class="text-xl text-[#aebac1] pr-1">←</button>
+        <div id="convoAvatar" class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs text-white">#</div>
+        <div>
+          <h3 id="convoName" class="font-bold text-sm text-[#e9edef] leading-tight">User</h3>
+          <p id="convoStatus" class="text-[10px] wa-green font-semibold">online</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-[#aebac1] text-lg pr-1">
+        <button onclick="triggerCall('video')" title="Video call">📹</button>
+        <button onclick="triggerCall('audio')" title="Voice call">📞</button>
+        <button title="Options">⋮</button>
       </div>
     </header>
 
-    <!-- STORIES / 24H STATUS BAR (WhatsApp & IG Style) -->
-    <div class="w-full bg-slate-50/80 px-4 py-3 border-b border-slate-100 flex items-center gap-4 overflow-x-auto">
-      <!-- Add My Status Button -->
-      <div onclick="openAddStatusModal()" class="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
-        <div class="relative w-14 h-14 rounded-full border-2 border-dashed border-pink-400 flex items-center justify-center bg-white shadow-sm hover:scale-105 transition">
-          <span class="text-xl">➕</span>
-        </div>
-        <span class="text-[11px] font-semibold text-slate-600">My Status</span>
+    <!-- Message Bubble Area -->
+    <div id="chatMessagesStream" class="flex-1 overflow-y-auto p-4 space-y-2.5 wa-chat-pattern"></div>
+
+    <!-- Media Attachment Preview -->
+    <div id="msgPreviewBar" class="hidden px-4 py-2 wa-surface border-t wa-border flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img id="msgPreviewThumb" class="w-10 h-10 object-cover rounded-lg border wa-border" />
+        <span class="text-xs text-[#8696a0]">Image attached</span>
+      </div>
+      <button onclick="cancelAttachment()" class="text-xs font-bold text-rose-400">✕ Cancel</button>
+    </div>
+
+    <!-- Bottom Input Bar -->
+    <div class="p-2 wa-surface border-t wa-border flex items-center gap-2">
+      <div class="flex-1 wa-input rounded-full px-3.5 py-1.5 flex items-center gap-2">
+        <button class="text-base text-[#8696a0]">😊</button>
+        <input id="chatBoxInput" onkeydown="if(event.key==='Enter') sendChatMessage()" type="text" placeholder="Message" class="bg-transparent text-sm w-full outline-none text-[#e9edef] placeholder-[#8696a0]" />
+        
+        <!-- Attachment Pin -->
+        <label class="cursor-pointer text-[#8696a0] hover:text-white text-base">
+          📎
+          <input type="file" id="chatMediaInput" accept="image/*" class="hidden" onchange="previewSelectedMedia(event)" />
+        </label>
       </div>
 
-      <!-- Live Stories Tray -->
-      <div id="storiesTray" class="flex items-center gap-3"></div>
-    </div>
-
-    <!-- TABS BAR -->
-    <div class="flex border-b border-slate-100 bg-white text-xs font-bold uppercase tracking-wider">
-      <button id="tabChatsBtn" onclick="switchMainTab('chats')" class="flex-1 py-3 text-center border-b-2 border-pink-500 text-pink-600 flex items-center justify-center gap-1.5">
-        <span>💬</span> Chats & DMs
+      <!-- Voice Note Mic / Send Button -->
+      <button id="micOrSendBtn" onclick="sendOrRecord()" class="w-11 h-11 wa-bg-green rounded-full flex items-center justify-center text-white text-base shadow-md">
+        🎤
       </button>
-      <button id="tabSearchBtn" onclick="switchMainTab('search')" class="flex-1 py-3 text-center text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center justify-center gap-1.5">
-        <span>🔍</span> Search People
-      </button>
-      <button id="tabChannelsBtn" onclick="switchMainTab('channels')" class="flex-1 py-3 text-center text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center justify-center gap-1.5">
-        <span>📢</span> Channels
-      </button>
-    </div>
-
-    <!-- VIEW 1: CHATS LIST & ACTIVE DM -->
-    <div id="chatsView" class="flex-1 flex flex-col md:flex-row h-[calc(100vh-175px)] overflow-hidden">
-      <!-- Friends & Rooms List Sidebar -->
-      <aside class="w-full md:w-80 border-b md:border-b-0 md:border-r border-slate-100 bg-white flex flex-col">
-        <!-- Quick search filter -->
-        <div class="p-3 border-b border-slate-100">
-          <div class="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-2xl">
-            <span class="text-slate-400 text-xs">🔍</span>
-            <input id="filterChatInput" oninput="filterChats()" type="text" placeholder="Search chats..." class="bg-transparent text-xs w-full outline-none text-slate-800 placeholder-slate-400 font-medium" />
-          </div>
-        </div>
-
-        <!-- Chat List Container -->
-        <div id="chatsListContainer" class="flex-1 overflow-y-auto divide-y divide-slate-50"></div>
-      </aside>
-
-      <!-- Active Chat Room Workspace -->
-      <main class="flex-1 flex flex-col bg-slate-50 h-full overflow-hidden relative">
-        <!-- Chat Header -->
-        <div id="activeChatHeader" class="px-4 py-3 bg-white border-b border-slate-100 flex items-center justify-between shadow-sm z-10">
-          <div class="flex items-center gap-3">
-            <div id="activeRecipientAvatar" class="w-9 h-9 rounded-full bg-gradient-to-tr from-sky-400 to-blue-500 text-white flex items-center justify-center font-bold text-xs shadow-sm">
-              #
-            </div>
-            <div>
-              <h2 id="activeChatTitle" class="font-bold text-sm text-slate-800">General Lounge</h2>
-              <p id="activeChatStatus" class="text-[10px] text-emerald-500 font-semibold flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online
-              </p>
-            </div>
-          </div>
-
-          <!-- Video / Audio Call Buttons -->
-          <div class="flex items-center gap-1.5">
-            <button onclick="startCall('audio')" class="p-2 bg-slate-100 hover:bg-sky-50 text-sky-600 rounded-xl transition" title="Voice Call">
-              📞
-            </button>
-            <button onclick="startCall('video')" class="p-2 bg-slate-100 hover:bg-pink-50 text-pink-600 rounded-xl transition" title="Video Call">
-              📹
-            </button>
-          </div>
-        </div>
-
-        <!-- Messages Area -->
-        <div id="messagesBox" class="flex-1 overflow-y-auto p-4 space-y-3 chat-bg"></div>
-
-        <!-- Image Preview Bar (Jab image select ho) -->
-        <div id="mediaPreviewBar" class="hidden px-4 py-2 bg-white border-t border-slate-100 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <img id="mediaPreviewImg" src="" class="w-10 h-10 object-cover rounded-lg border border-slate-200" />
-            <span class="text-xs text-slate-600 font-medium">Photo attached</span>
-          </div>
-          <button onclick="cancelMediaUpload()" class="text-slate-400 hover:text-slate-600 text-xs font-bold">✕ Cancel</button>
-        </div>
-
-        <!-- Chat Bottom Input Bar -->
-        <div class="p-3 bg-white border-t border-slate-100">
-          <div class="flex items-center gap-2 bg-slate-100 rounded-3xl px-3 py-1.5 focus-within:ring-2 focus-within:ring-pink-400/40 transition">
-            
-            <!-- Media Attachment -->
-            <label class="cursor-pointer p-1.5 text-slate-500 hover:text-pink-500 transition" title="Send Photo">
-              📷
-              <input type="file" id="mediaFileInput" accept="image/*" class="hidden" onchange="handleFileSelect(event)" />
-            </label>
-
-            <!-- Text Input -->
-            <input id="chatInput" type="text" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Type a message..." class="flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder-slate-400 py-1.5" />
-
-            <!-- WhatsApp Voice Note Mic -->
-            <button id="recordBtn" onclick="toggleAudioRecording()" class="p-2 bg-white hover:bg-slate-200 text-slate-600 hover:text-pink-600 rounded-full shadow-sm transition" title="Hold/Tap to Record">
-              🎤
-            </button>
-
-            <!-- Send Button -->
-            <button onclick="sendChatMessage()" class="w-9 h-9 bg-gradient-to-tr from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white rounded-full flex items-center justify-center font-bold text-xs shadow-md shadow-pink-500/30 transition">
-              ➤
-            </button>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <!-- VIEW 2: SEARCH USERS (Username & Gmail) -->
-    <div id="searchView" class="hidden p-4 flex-1 max-w-xl mx-auto w-full">
-      <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm">
-        <h3 class="font-bold text-base text-slate-800 mb-1">Find Friends</h3>
-        <p class="text-xs text-slate-500 mb-4">Search anyone by Username or Google Email</p>
-
-        <div class="flex gap-2">
-          <input id="searchUserInput" type="text" placeholder="e.g. rajat or rajat@gmail.com" class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-2xl text-sm outline-none focus:border-pink-500 text-slate-800" />
-          <button onclick="searchUsers()" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-2xl text-xs font-bold shadow-md shadow-pink-500/20">Search</button>
-        </div>
-
-        <div id="searchResultsList" class="mt-4 space-y-2"></div>
-      </div>
-    </div>
-
-    <!-- VIEW 3: CHANNELS & BROADCASTS -->
-    <div id="channelsView" class="hidden p-4 flex-1 max-w-xl mx-auto w-full">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="font-bold text-base text-slate-800">Public Channels</h3>
-          <p class="text-xs text-slate-500">Subscribe and broadcast updates</p>
-        </div>
-        <button onclick="openNewGroupModal('channel')" class="px-3.5 py-1.5 bg-sky-500 text-white rounded-xl text-xs font-bold">+ New Channel</button>
-      </div>
-      <div id="channelsContainer" class="space-y-3"></div>
     </div>
   </div>
 
-  <!-- INCOMING FRIEND REQUESTS DRAWER MODAL -->
-  <div id="requestsModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-white border border-slate-100 p-6 rounded-3xl w-full max-w-sm shadow-2xl">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="font-bold text-base text-slate-800">Friend Requests</h3>
-        <button onclick="toggleRequestsDrawer()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
-      </div>
-      <div id="requestsList" class="space-y-2.5 max-h-60 overflow-y-auto"></div>
-    </div>
-  </div>
+  <!-- ================= MODALS ================= -->
 
-  <!-- ADD STATUS / STORY MODAL -->
-  <div id="addStatusModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-white border border-slate-100 p-6 rounded-3xl w-full max-w-sm shadow-2xl">
-      <h3 class="font-bold text-base text-slate-800 mb-2">Create Status Story</h3>
-      <textarea id="statusCaption" placeholder="What's happening? Share with friends..." class="w-full h-24 p-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-800 outline-none resize-none focus:border-pink-500 mb-3"></textarea>
-      <div class="mb-4">
-        <label class="text-[11px] font-bold text-slate-500 block mb-1">Optional Photo:</label>
-        <input type="file" id="statusImageInput" accept="image/*" class="text-xs text-slate-500" />
-      </div>
+  <!-- Add Status Modal -->
+  <div id="addStatusModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+    <div class="wa-surface border wa-border p-6 rounded-3xl w-full max-w-xs text-white">
+      <h3 class="font-bold text-base mb-2">Create Status</h3>
+      <textarea id="statusCaptionInp" placeholder="Type a status update..." class="w-full h-24 p-3 wa-input border wa-border rounded-xl text-xs text-white outline-none mb-3 resize-none"></textarea>
+      <input type="file" id="statusMediaInp" accept="image/*" class="text-xs text-[#8696a0] mb-4" />
       <div class="flex gap-2">
-        <button onclick="closeAddStatusModal()" class="flex-1 py-2.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-600">Cancel</button>
-        <button onclick="publishStatusStory()" class="flex-1 py-2.5 bg-gradient-to-r from-pink-500 to-yellow-500 text-white rounded-xl text-xs font-bold shadow-md shadow-pink-500/20">Post Status</button>
+        <button onclick="closeAddStatusModal()" class="flex-1 py-2 wa-input rounded-xl text-xs font-bold">Cancel</button>
+        <button onclick="submitStatus()" class="flex-1 py-2 wa-bg-green text-[#111b21] rounded-xl text-xs font-bold">Share</button>
       </div>
     </div>
   </div>
 
-  <!-- FULLSCREEN STORY VIEWER MODAL -->
-  <div id="storyViewerModal" class="hidden fixed inset-0 bg-black/95 flex flex-col items-center justify-center p-4 z-50">
-    <div class="w-full max-w-sm bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 flex flex-col relative text-white">
-      <button onclick="closeStoryViewer()" class="absolute top-4 right-4 z-20 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center text-sm font-bold">✕</button>
-      <div class="p-4 flex items-center gap-2 border-b border-slate-800">
-        <div id="storyViewerAvatar" class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center text-xs font-bold">U</div>
-        <div>
-          <span id="storyViewerUser" class="font-bold text-xs">@user</span>
-          <span id="storyViewerTime" class="text-[10px] text-slate-400 block font-mono">10m ago</span>
+  <!-- Status Viewer Modal -->
+  <div id="statusViewerModal" class="hidden fixed inset-0 bg-black z-50 flex flex-col items-center justify-center p-4">
+    <div class="w-full max-w-sm flex-1 flex flex-col justify-between py-6">
+      <div class="flex items-center justify-between text-white">
+        <div class="flex items-center gap-2">
+          <div id="stViewAvatar" class="w-9 h-9 rounded-full bg-slate-700 flex items-center justify-center font-bold text-xs">U</div>
+          <div>
+            <h4 id="stViewUser" class="font-bold text-xs">User</h4>
+            <span class="text-[10px] text-slate-400">Just now</span>
+          </div>
         </div>
+        <button onclick="closeStatusViewer()" class="text-lg font-bold">✕</button>
       </div>
-      <div class="min-h-[300px] flex items-center justify-center bg-black/40 p-4">
-        <img id="storyViewerImg" class="max-h-72 w-full object-contain rounded-xl hidden" />
-        <p id="storyViewerText" class="text-sm font-medium text-center leading-relaxed"></p>
+      <div class="flex-1 flex flex-col items-center justify-center my-4">
+        <img id="stViewImg" class="max-h-80 w-auto rounded-2xl hidden mb-3" />
+        <p id="stViewText" class="text-center text-lg font-semibold text-white px-4"></p>
       </div>
-      <div class="p-3 bg-slate-950 flex items-center justify-between border-t border-slate-800">
-        <button onclick="likeCurrentStory()" class="px-4 py-2 bg-pink-600 hover:bg-pink-500 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
-          <span>❤️</span> <span id="storyViewerLikes">0</span>
+      <div class="flex justify-center">
+        <button onclick="likeActiveStatus()" class="px-5 py-2 rounded-full wa-input text-rose-400 text-xs font-bold flex items-center gap-2">
+          ❤️ <span id="stViewLikes">0</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- PROFILE MODAL (DP, Bio, Username) -->
-  <div id="profileModal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-white border border-slate-100 p-6 rounded-3xl w-full max-w-sm shadow-2xl">
-      <h3 class="font-bold text-base text-slate-800 mb-4">Edit Profile</h3>
+  <!-- New Chat / Search Modal -->
+  <div id="newChatModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+    <div class="wa-surface border wa-border p-6 rounded-3xl w-full max-w-xs text-white">
+      <h3 class="font-bold text-base mb-1">New Chat</h3>
+      <p class="text-xs text-[#8696a0] mb-3">Search by Username or Email</p>
+      <input id="userSearchInp" type="text" placeholder="rajat or rajat@gmail.com" class="w-full p-2.5 wa-input border wa-border rounded-xl text-xs text-white outline-none mb-3" />
+      <button onclick="executeUserSearch()" class="w-full py-2 wa-bg-green text-[#111b21] rounded-xl text-xs font-bold mb-3">Search</button>
+      <div id="userSearchResults" class="space-y-2 max-h-48 overflow-y-auto"></div>
+      <button onclick="closeNewChatModal()" class="w-full mt-3 py-2 wa-input rounded-xl text-xs font-bold">Close</button>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+    <div class="wa-surface border wa-border p-6 rounded-3xl w-full max-w-xs text-white">
+      <h3 class="font-bold text-base mb-4">Edit Profile</h3>
       <div class="space-y-3">
         <div>
-          <label class="text-[11px] font-bold text-slate-400 uppercase">Username</label>
-          <input id="editUsername" type="text" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 outline-none" />
+          <label class="text-[10px] text-[#8696a0] uppercase font-bold">Display Name</label>
+          <input id="editNameInp" type="text" class="w-full p-2 wa-input border wa-border rounded-xl text-xs text-white outline-none mt-1" />
         </div>
         <div>
-          <label class="text-[11px] font-bold text-slate-400 uppercase">About / Bio</label>
-          <input id="editBio" type="text" placeholder="Hey there! I am using Pulse." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 outline-none" />
-        </div>
-        <div>
-          <label class="text-[11px] font-bold text-slate-400 uppercase">Avatar Color</label>
-          <div class="flex gap-2 mt-1">
-            <button onclick="setAvatarColor('from-pink-500 to-rose-400')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400"></button>
-            <button onclick="setAvatarColor('from-sky-400 to-blue-500')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-sky-400 to-blue-500"></button>
-            <button onclick="setAvatarColor('from-yellow-400 to-amber-500')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-amber-500"></button>
-            <button onclick="setAvatarColor('from-emerald-400 to-teal-500')" class="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500"></button>
-          </div>
+          <label class="text-[10px] text-[#8696a0] uppercase font-bold">About / Bio</label>
+          <input id="editBioInp" type="text" placeholder="Hey there! I am using WhatsApp." class="w-full p-2 wa-input border wa-border rounded-xl text-xs text-white outline-none mt-1" />
         </div>
       </div>
-      <div class="flex gap-2 mt-6">
-        <button onclick="closeProfileModal()" class="flex-1 py-2 bg-slate-100 rounded-xl text-xs font-bold text-slate-600">Cancel</button>
-        <button onclick="saveProfile()" class="flex-1 py-2 bg-pink-500 text-white rounded-xl text-xs font-bold shadow-md shadow-pink-500/20">Save</button>
+      <div class="flex gap-2 mt-5">
+        <button onclick="closeProfileModal()" class="flex-1 py-2 wa-input rounded-xl text-xs font-bold">Cancel</button>
+        <button onclick="saveUserProfile()" class="flex-1 py-2 wa-bg-green text-[#111b21] rounded-xl text-xs font-bold">Save</button>
       </div>
     </div>
   </div>
 
-  <!-- CALL MODAL (Audio & Video Calling) -->
-  <div id="callModal" class="hidden fixed inset-0 bg-slate-950/95 flex flex-col items-center justify-center p-4 z-50">
-    <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col text-white">
-      <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-          <span id="callTypeTitle" class="font-bold text-xs uppercase tracking-wider text-emerald-400">Live Call</span>
-        </div>
-        <button onclick="endCall()" class="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold">End</button>
-      </div>
-      <div class="grid grid-cols-2 gap-2 p-3 bg-black/60 min-h-[260px]">
-        <div class="relative bg-slate-800 rounded-2xl overflow-hidden flex items-center justify-center">
-          <video id="localVideo" autoplay playsinline muted class="w-full h-full object-cover"></video>
-          <span class="absolute bottom-2 left-2 text-[9px] bg-black/60 px-1.5 py-0.5 rounded text-white">You</span>
-        </div>
-        <div class="relative bg-slate-800 rounded-2xl overflow-hidden flex items-center justify-center">
-          <video id="remoteVideo" autoplay playsinline class="w-full h-full object-cover"></video>
-          <span class="absolute bottom-2 left-2 text-[9px] bg-black/60 px-1.5 py-0.5 rounded text-white">Peer</span>
-        </div>
-      </div>
-      <div class="p-4 bg-slate-900 flex justify-center gap-3">
-        <button onclick="toggleMic()" id="micBtn" class="p-3 bg-slate-800 rounded-full text-base">🎙️</button>
-        <button onclick="toggleCam()" id="camBtn" class="p-3 bg-slate-800 rounded-full text-base">📷</button>
-        <button onclick="endCall()" class="p-3 bg-rose-600 rounded-full text-base">📞</button>
-      </div>
+  <!-- Video/Audio Call Overlay -->
+  <div id="callOverlay" class="hidden fixed inset-0 bg-[#0b141a]/95 z-50 flex flex-col items-center justify-between p-6">
+    <div class="text-center mt-6">
+      <h3 id="callTargetName" class="text-xl font-bold text-white">Calling...</h3>
+      <p id="callStatusText" class="text-xs wa-green font-semibold mt-1">Ringing</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3 w-full max-w-xs h-64 my-auto">
+      <video id="locVideo" autoplay playsinline muted class="w-full h-full object-cover rounded-2xl bg-black border wa-border"></video>
+      <video id="remVideo" autoplay playsinline class="w-full h-full object-cover rounded-2xl bg-black border wa-border"></video>
+    </div>
+
+    <div class="flex items-center gap-6 mb-6">
+      <button onclick="toggleCallMic()" id="callMicBtn" class="w-12 h-12 wa-input rounded-full text-lg">🎙️</button>
+      <button onclick="toggleCallCam()" id="callCamBtn" class="w-12 h-12 wa-input rounded-full text-lg">📷</button>
+      <button onclick="hangupCall()" class="w-14 h-14 bg-rose-600 rounded-full text-white text-xl shadow-lg">📞</button>
     </div>
   </div>
 
   <script>
-    // HARDCODED SUPABASE KEYS
+    // HARDCODED SUPABASE CREDENTIALS
     const SB_URL = "https://tynoyujftmziutiytgsa.supabase.co";
     const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5bm95dWpmdG16aXV0aXl0Z3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NjE3MzQsImV4cCI6MjEwNjIzNzczNH0.71VfM08bzaxu__Idm3sp00VHzly9CSss9WwA-l5Fd5g";
     const sb = supabase.createClient(SB_URL, SB_KEY);
 
     let currentUser = null;
-    let myProfile = { username: '', bio: 'Hey! I am using Pulse.', color: 'from-pink-500 to-rose-400' };
-    let currentRoom = "general";
-    let currentChatType = "room"; // 'room' or 'dm'
-    let activeRecipientEmail = null;
+    let myProfile = { name: '', bio: 'Hey there! I am using WhatsApp.' };
+    let currentTab = 'chats';
+    let currentRoomId = null;
+    let currentRoomTitle = '';
     let chatChannel = null;
 
-    // Data lists
-    let myFriends = [];
-    let pendingRequests = [];
-    let channelsList = ["Tech Talks", "Campus Group", "Random Buzz"];
+    let chatContacts = [
+      { id: 'general', name: 'General Community Group', lastMsg: 'Welcome to WhatsApp Web!', time: '12:00', type: 'group' }
+    ];
 
-    // Media & Voice
-    let selectedImageBase64 = null;
+    let customChannels = [
+      { name: "TRADER Bitcoin Crypto Forex", followers: "45K", msg: "⚡ [FUTURE] #SOL / USD...", time: "08:35", unread: 37 },
+      { name: "Binance Official", followers: "1.2M", msg: "📍 Trade Perpetuals, Win $AS...", time: "Yesterday", unread: 4 },
+      { name: "FOREX TRADER", followers: "80K", msg: "USDJPY T2 DONE ✓", time: "21/09/2026", unread: 1 }
+    ];
+
+    let pendingRequests = [];
+    let selectedMediaBase64 = null;
+    let isRecordingAudio = false;
     let mediaRecorder = null;
     let audioChunks = [];
-    let isRecording = false;
 
     // WebRTC
-    let peerConnection = null;
-    let localStream = null;
-    let signalingChannel = null;
-    const rtcConfig = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+    let rtcPeer = null;
+    let localMediaStream = null;
+    let sigChannel = null;
+    const iceServers = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
 
     async function init() {
-      checkSession();
+      checkAuth();
     }
 
-    async function checkSession() {
+    async function checkAuth() {
       const { data: { session } } = await sb.auth.getSession();
       if (session?.user) {
         currentUser = session.user;
-        loadProfileData();
-        showApp();
+        loadProfile();
+        setupApp();
       } else {
         document.getElementById("authScreen").classList.remove("hidden");
         document.getElementById("mainApp").classList.add("hidden");
@@ -382,7 +396,7 @@
       const email = document.getElementById("authEmail").value.trim();
       const password = document.getElementById("authPass").value.trim();
       const msg = document.getElementById("authMsg");
-      if (!email || !password) return msg.innerText = "Email and password required";
+      if (!email || !password) return msg.innerText = "Email & password required";
       msg.innerText = "Connecting...";
 
       try {
@@ -393,199 +407,211 @@
         if (res.error) throw res.error;
         if (res.data?.user) {
           currentUser = res.data.user;
-          loadProfileData();
-          showApp();
+          loadProfile();
+          setupApp();
         }
       } catch (err) {
         msg.innerText = err.message;
       }
     }
 
-    async function logout() {
-      await sb.auth.signOut();
+    function logout() {
+      sb.auth.signOut();
       location.reload();
     }
 
-    function loadProfileData() {
-      const saved = localStorage.getItem(`profile_${currentUser.email}`);
-      if (saved) {
-        myProfile = JSON.parse(saved);
-      } else {
-        myProfile.username = currentUser.email.split('@')[0];
-      }
-      const savedFriends = localStorage.getItem(`friends_${currentUser.email}`);
-      if (savedFriends) myFriends = JSON.parse(savedFriends);
+    function loadProfile() {
+      const saved = localStorage.getItem(`wa_prof_${currentUser.email}`);
+      if (saved) myProfile = JSON.parse(saved);
+      else myProfile.name = currentUser.email.split('@')[0];
+
+      const savedContacts = localStorage.getItem(`wa_contacts_${currentUser.email}`);
+      if (savedContacts) chatContacts = JSON.parse(savedContacts);
     }
 
-    function showApp() {
+    function setupApp() {
       document.getElementById("authScreen").classList.add("hidden");
       document.getElementById("mainApp").classList.remove("hidden");
-      document.getElementById("headerUsername").innerText = `@${myProfile.username}`;
-      document.getElementById("headerAvatar").className = `w-10 h-10 rounded-full bg-gradient-to-tr ${myProfile.color} flex items-center justify-center text-white font-bold text-sm shadow-md`;
-      document.getElementById("headerAvatar").innerText = myProfile.username[0].toUpperCase();
 
-      renderChatsSidebar();
-      openChatRoom("general", "General Lounge", "room");
-      loadStories();
-      listenFriendRequests();
-      setupWebRTCSignaling();
+      renderChatList();
+      loadStatuses();
+      renderChannels();
+      listenIncomingSignals();
     }
 
-    // --- NAVIGATION TABS ---
-    function switchMainTab(tab) {
-      document.getElementById("chatsView").classList.toggle("hidden", tab !== 'chats');
-      document.getElementById("searchView").classList.toggle("hidden", tab !== 'search');
-      document.getElementById("channelsView").classList.toggle("hidden", tab !== 'channels');
+    // --- TAB SWITCHER ---
+    function switchTab(tab) {
+      currentTab = tab;
+      document.getElementById("tabContentChats").classList.toggle("hidden", tab !== 'chats');
+      document.getElementById("tabContentUpdates").classList.toggle("hidden", tab !== 'updates');
+      document.getElementById("tabContentCalls").classList.toggle("hidden", tab !== 'calls');
+      document.getElementById("tabContentTools").classList.toggle("hidden", tab !== 'tools');
 
-      document.getElementById("tabChatsBtn").className = tab === 'chats' ? "flex-1 py-3 text-center border-b-2 border-pink-500 text-pink-600 flex items-center justify-center gap-1.5" : "flex-1 py-3 text-center text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center justify-center gap-1.5";
-      document.getElementById("tabSearchBtn").className = tab === 'search' ? "flex-1 py-3 text-center border-b-2 border-pink-500 text-pink-600 flex items-center justify-center gap-1.5" : "flex-1 py-3 text-center text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center justify-center gap-1.5";
-      document.getElementById("tabChannelsBtn").className = tab === 'channels' ? "flex-1 py-3 text-center border-b-2 border-pink-500 text-pink-600 flex items-center justify-center gap-1.5" : "flex-1 py-3 text-center text-slate-400 hover:text-slate-600 border-b-2 border-transparent flex items-center justify-center gap-1.5";
+      const tabs = ['Chats', 'Calls', 'Updates', 'Tools'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`navBtn${t}`);
+        const isSelected = t.toLowerCase() === tab;
+        btn.className = isSelected ? "flex flex-col items-center gap-1 text-[#e9edef]" : "flex flex-col items-center gap-1 text-[#8696a0]";
+        btn.querySelector("div").className = isSelected ? "px-4 py-1 rounded-full wa-input text-base" : "px-4 py-1 rounded-full text-base";
+        btn.querySelector("span").className = isSelected ? "text-[11px] font-bold" : "text-[11px] font-semibold";
+      });
 
-      if (tab === 'channels') renderChannels();
+      const fab = document.getElementById("mainFab");
+      if (tab === 'chats') fab.innerText = "💬";
+      else if (tab === 'updates') fab.innerText = "📷";
+      else if (tab === 'calls') fab.innerText = "📞";
+      else fab.innerText = "⚙️";
     }
 
-    // --- SIDEBAR CHATS & DMS ---
-    function renderChatsSidebar() {
+    function handleFabClick() {
+      if (currentTab === 'chats') openNewChatModal();
+      else if (currentTab === 'updates') openAddStatusModal();
+      else if (currentTab === 'calls') openNewChatModal();
+      else openProfileModal();
+    }
+
+    // --- CHATS TAB ---
+    function renderChatList(filter = '') {
       const container = document.getElementById("chatsListContainer");
-      let html = `
-        <div onclick="openChatRoom('general', 'General Lounge', 'room')" class="p-3.5 flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition ${currentRoom === 'general' ? 'bg-pink-50/60' : ''}">
-          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pink-500 to-yellow-400 text-white flex items-center justify-center text-lg shadow-sm">#</div>
+      const filtered = chatContacts.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()));
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-6 text-center text-xs text-[#8696a0]">No chats found. Tap 💬 to start a conversation!</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(c => `
+        <div onclick="openConversation('${c.id}', '${c.name}')" class="px-4 py-3 flex items-center gap-3.5 hover:bg-[#202c33]/50 cursor-pointer active:bg-[#202c33]">
+          <div class="w-12 h-12 rounded-full bg-[#202c33] border wa-border flex items-center justify-center font-bold text-sm text-[#e9edef] flex-shrink-0">
+            ${c.name[0].toUpperCase()}
+          </div>
           <div class="flex-1 min-w-0">
-            <div class="flex justify-between items-baseline"><h4 class="font-bold text-xs text-slate-800">General Lounge</h4></div>
-            <p class="text-[11px] text-slate-400 truncate">Public community room</p>
+            <div class="flex justify-between items-baseline mb-0.5">
+              <h3 class="font-bold text-sm text-[#e9edef] truncate">${c.name}</h3>
+              <span class="text-[10px] text-[#8696a0] font-mono">${c.time || '13:00'}</span>
+            </div>
+            <p class="text-xs text-[#8696a0] truncate flex items-center gap-1">
+              <span class="wa-green text-xs">✓✓</span>
+              <span>${c.lastMsg || 'Tap to chat'}</span>
+            </p>
           </div>
         </div>
-      `;
-
-      if (myFriends.length === 0) {
-        html += `<div class="p-4 text-center text-xs text-slate-400">No friends added yet. Search by username to start DM!</div>`;
-      } else {
-        myFriends.forEach(f => {
-          const dmId = getDMId(currentUser.email, f.email);
-          const isCurrent = currentRoom === dmId;
-          html += `
-            <div onclick="openChatRoom('${dmId}', '${f.username}', 'dm', '${f.email}')" class="p-3.5 flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition ${isCurrent ? 'bg-sky-50/60' : ''}">
-              <div class="w-11 h-11 rounded-full bg-gradient-to-tr from-sky-400 to-blue-500 text-white flex items-center justify-center font-bold text-sm shadow-sm">${f.username[0].toUpperCase()}</div>
-              <div class="flex-1 min-w-0">
-                <div class="flex justify-between items-baseline">
-                  <h4 class="font-bold text-xs text-slate-800">@${f.username}</h4>
-                  <span class="text-[9px] text-emerald-500 font-bold">DM</span>
-                </div>
-                <p class="text-[11px] text-slate-400 truncate">${f.bio || f.email}</p>
-              </div>
-            </div>
-          `;
-        });
-      }
-      container.innerHTML = html;
+      `).join('');
     }
 
-    function getDMId(email1, email2) {
-      return 'dm_' + [email1, email2].sort().join('___').replace(/[^a-zA-Z0-9_]/g, '_');
+    function filterChatList() {
+      const q = document.getElementById("mainSearchInput").value.trim();
+      renderChatList(q);
+    }
+    function focusSearch() {
+      document.getElementById("mainSearchInput").focus();
     }
 
-    async function openChatRoom(roomId, title, type, targetEmail = null) {
-      currentRoom = roomId;
-      currentChatType = type;
-      activeRecipientEmail = targetEmail;
+    // --- ACTIVE CONVERSATION ---
+    async function openConversation(roomId, title) {
+      currentRoomId = roomId;
+      currentRoomTitle = title;
 
-      document.getElementById("activeChatTitle").innerText = title;
-      document.getElementById("activeRecipientAvatar").innerText = title[0].toUpperCase();
-      renderChatsSidebar();
+      document.getElementById("convoName").innerText = title;
+      document.getElementById("convoAvatar").innerText = title[0].toUpperCase();
+      document.getElementById("conversationScreen").classList.remove("hidden");
 
-      const box = document.getElementById("messagesBox");
-      box.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">Loading messages...</div>`;
+      const stream = document.getElementById("chatMessagesStream");
+      stream.innerHTML = `<div class="text-center text-[11px] text-[#8696a0] py-4">🔒 Messages are end-to-end synced</div>`;
 
       const { data } = await sb.from('messages').select('*').eq('room_id', roomId).order('created_at', { ascending: true }).limit(80);
-      box.innerHTML = "";
-      if (data) data.forEach(m => appendMessageBubble(m));
+      if (data) data.forEach(m => appendChatMessage(m));
 
       if (chatChannel) sb.removeChannel(chatChannel);
-      chatChannel = sb.channel(`chat_${roomId}`)
+      chatChannel = sb.channel(`wa_room_${roomId}`)
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `room_id=eq.${roomId}` }, payload => {
-          appendMessageBubble(payload.new);
+          appendChatMessage(payload.new);
         }).subscribe();
     }
 
-    // --- MESSAGING & MEDIA ---
-    function handleFileSelect(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        selectedImageBase64 = ev.target.result;
-        document.getElementById("mediaPreviewImg").src = selectedImageBase64;
-        document.getElementById("mediaPreviewBar").classList.remove("hidden");
-      };
-      reader.readAsDataURL(file);
+    function closeConversation() {
+      document.getElementById("conversationScreen").classList.add("hidden");
+      if (chatChannel) sb.removeChannel(chatChannel);
     }
-    function cancelMediaUpload() {
-      selectedImageBase64 = null;
-      document.getElementById("mediaFileInput").value = "";
-      document.getElementById("mediaPreviewBar").classList.add("hidden");
+
+    function appendChatMessage(m) {
+      const stream = document.getElementById("chatMessagesStream");
+      const isMe = m.user_email === currentUser.email;
+      let data = {};
+      try { data = JSON.parse(m.message); } catch (e) { data = { text: m.message, type: 'text' }; }
+
+      const time = new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const bubble = document.createElement("div");
+      bubble.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'}`;
+
+      let body = '';
+      if (data.type === 'image') {
+        body = `<img src="${data.image}" class="rounded-xl max-h-56 w-auto mb-1" />${data.text ? `<p class="text-xs">${data.text}</p>` : ''}`;
+      } else if (data.type === 'audio') {
+        body = `<audio controls src="${data.audio}" class="h-8 w-44"></audio>`;
+      } else {
+        body = `<p class="text-xs leading-relaxed break-words">${data.text}</p>`;
+      }
+
+      bubble.innerHTML = `
+        <div class="px-3.5 py-2 rounded-2xl max-w-[80%] ${isMe ? 'wa-bg-green text-[#111b21] rounded-tr-none' : 'wa-surface text-[#e9edef] border wa-border rounded-tl-none'} shadow">
+          ${!isMe ? `<span class="text-[9px] text-[#00a884] font-bold block mb-0.5">@${m.user_email.split('@')[0]}</span>` : ''}
+          ${body}
+          <div class="text-[9px] text-right mt-0.5 opacity-70 font-mono">${time}${isMe ? '✓✓' : ''}</div>
+        </div>
+      `;
+      stream.appendChild(bubble);
+      stream.scrollTop = stream.scrollHeight;
     }
 
     async function sendChatMessage() {
-      const inp = document.getElementById("chatInput");
+      const inp = document.getElementById("chatBoxInput");
       const text = inp.value.trim();
-      if (!text && !selectedImageBase64) return;
+      if (!text && !selectedMediaBase64) return;
 
       const payload = {
-        text: text,
-        image: selectedImageBase64,
-        type: selectedImageBase64 ? 'image' : 'text',
-        senderName: myProfile.username
+        text,
+        image: selectedMediaBase64,
+        type: selectedMediaBase64 ? 'image' : 'text'
       };
 
       inp.value = "";
-      cancelMediaUpload();
+      cancelAttachment();
 
       await sb.from('messages').insert([{
-        room_id: currentRoom,
+        room_id: currentRoomId,
         user_email: currentUser.email,
         message: JSON.stringify(payload)
       }]);
     }
 
-    function appendMessageBubble(m) {
-      const box = document.getElementById("messagesBox");
-      const isMe = m.user_email === currentUser.email;
-      let data = {};
-      try { data = JSON.parse(m.message); } catch (e) { data = { text: m.message, type: 'text' }; }
-
-      const sender = data.senderName || m.user_email.split('@')[0];
-      const time = new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      const el = document.createElement("div");
-      el.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} space-y-1`;
-
-      let content = '';
-      if (data.type === 'image') {
-        content = `
-          <img src="${data.image}" class="rounded-xl max-h-60 w-auto mb-1 border border-slate-100 shadow-sm" />
-          ${data.text ? `<p class="text-xs font-medium leading-relaxed">${data.text}</p>` : ''}
-        `;
-      } else if (data.type === 'audio') {
-        content = `<audio controls src="${data.audio}" class="h-8 w-48 sm:w-56"></audio>`;
-      } else {
-        content = `<p class="text-xs font-medium leading-relaxed break-words">${data.text || ''}</p>`;
-      }
-
-      el.innerHTML = `
-        <span class="text-[10px] text-slate-400 px-1 font-semibold">${isMe ? 'You' : '@' + sender}</span>
-        <div class="px-3.5 py-2.5 rounded-2xl max-w-xs sm:max-w-md ${isMe ? 'bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-tr-none shadow-md shadow-pink-500/20' : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none shadow-sm'}">
-          ${content}
-          <div class="text-[9px] text-right mt-1 opacity-70 font-mono">${time} ✓✓</div>
-        </div>
-      `;
-      box.appendChild(el);
-      box.scrollTop = box.scrollHeight;
+    function previewSelectedMedia(e) {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = ev => {
+        selectedMediaBase64 = ev.target.result;
+        document.getElementById("msgPreviewThumb").src = selectedMediaBase64;
+        document.getElementById("msgPreviewBar").classList.remove("hidden");
+      };
+      r.readAsDataURL(f);
+    }
+    function cancelAttachment() {
+      selectedMediaBase64 = null;
+      document.getElementById("chatMediaInput").value = "";
+      document.getElementById("msgPreviewBar").classList.add("hidden");
     }
 
-    // --- WHATSAPP VOICE NOTES ---
-    async function toggleAudioRecording() {
-      const btn = document.getElementById("recordBtn");
-      if (!isRecording) {
+    // Voice Note
+    async function sendOrRecord() {
+      const inp = document.getElementById("chatBoxInput").value.trim();
+      if (inp || selectedMediaBase64) {
+        sendChatMessage();
+        return;
+      }
+
+      const btn = document.getElementById("micOrSendBtn");
+      if (!isRecordingAudio) {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
           mediaRecorder = new MediaRecorder(stream);
@@ -593,325 +619,290 @@
           mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
           mediaRecorder.onstop = async () => {
             const blob = new Blob(audioChunks, { type: 'audio/webm' });
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = async () => {
+            const r = new FileReader();
+            r.onloadend = async () => {
               await sb.from('messages').insert([{
-                room_id: currentRoom,
+                room_id: currentRoomId,
                 user_email: currentUser.email,
-                message: JSON.stringify({ audio: reader.result, type: 'audio', senderName: myProfile.username })
+                message: JSON.stringify({ audio: r.result, type: 'audio' })
               }]);
             };
+            r.readAsDataURL(blob);
           };
           mediaRecorder.start();
-          isRecording = true;
+          isRecordingAudio = true;
           btn.innerText = "🛑";
-          btn.className = "p-2 bg-rose-500 text-white rounded-full animate-bounce shadow-md";
+          btn.className = "w-11 h-11 bg-rose-600 rounded-full flex items-center justify-center text-white text-base animate-pulse";
         } catch (e) {
-          alert("Mic access required");
+          alert("Mic permission needed");
         }
       } else {
         mediaRecorder.stop();
-        isRecording = false;
+        isRecordingAudio = false;
         btn.innerText = "🎤";
-        btn.className = "p-2 bg-white text-slate-600 rounded-full shadow-sm";
+        btn.className = "w-11 h-11 wa-bg-green rounded-full flex items-center justify-center text-white text-base";
       }
     }
 
-    // --- SEARCH USERS & SEND FRIEND REQUEST ---
-    async function searchUsers() {
-      const query = document.getElementById("searchUserInput").value.trim().toLowerCase();
-      const list = document.getElementById("searchResultsList");
-      if (!query) return;
-      list.innerHTML = `<div class="text-xs text-slate-400">Searching...</div>`;
-
-      // Simulating user discovery using public posts & registered profiles
-      const { data } = await sb.from('posts').select('user_email').limit(50);
-      const emails = Array.from(new Set((data || []).map(p => p.user_email))).filter(e => e && e !== currentUser.email);
-
-      const matched = emails.filter(e => e.toLowerCase().includes(query));
-
-      if (matched.length === 0) {
-        list.innerHTML = `
-          <div class="p-3 bg-slate-50 rounded-2xl flex items-center justify-between">
-            <span class="text-xs text-slate-700 font-semibold">${query}</span>
-            <button onclick="sendFriendRequest('${query}')" class="px-3 py-1 bg-pink-500 text-white text-xs font-bold rounded-xl shadow-sm">Send Request</button>
-          </div>
-        `;
-        return;
-      }
-
-      list.innerHTML = matched.map(em => `
-        <div class="p-3 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-between">
-          <div>
-            <h5 class="font-bold text-xs text-slate-800">@${em.split('@')[0]}</h5>
-            <span class="text-[10px] text-slate-400">${em}</span>
-          </div>
-          <button onclick="sendFriendRequest('${em}')" class="px-3 py-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-bold rounded-xl shadow-sm">Add Friend</button>
-        </div>
-      `).join('');
-    }
-
-    async function sendFriendRequest(targetEmail) {
-      await sb.from('messages').insert([{
-        room_id: `req_${targetEmail.replace(/[^a-zA-Z0-9_]/g, '_')}`,
-        user_email: currentUser.email,
-        message: JSON.stringify({
-          type: 'friend_request',
-          senderEmail: currentUser.email,
-          senderUsername: myProfile.username,
-          senderBio: myProfile.bio
-        })
-      }]);
-      alert(`Friend request sent to ${targetEmail}!`);
-    }
-
-    function listenFriendRequests() {
-      const myReqRoom = `req_${currentUser.email.replace(/[^a-zA-Z0-9_]/g, '_')}`;
-      sb.channel('realtime_requests')
-        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `room_id=eq.${myReqRoom}` }, payload => {
-          checkRequests();
-        }).subscribe();
-      checkRequests();
-    }
-
-    async function checkRequests() {
-      const myReqRoom = `req_${currentUser.email.replace(/[^a-zA-Z0-9_]/g, '_')}`;
-      const { data } = await sb.from('messages').select('*').eq('room_id', myReqRoom);
-      pendingRequests = (data || []).map(r => ({ id: r.id, ...JSON.parse(r.message) }));
-      const badge = document.getElementById("requestsBadge");
-      if (pendingRequests.length > 0) {
-        badge.innerText = pendingRequests.length;
-        badge.classList.remove("hidden");
-      } else {
-        badge.classList.add("hidden");
-      }
-    }
-
-    function toggleRequestsDrawer() {
-      const modal = document.getElementById("requestsModal");
-      modal.classList.toggle("hidden");
-      const list = document.getElementById("requestsList");
-      if (pendingRequests.length === 0) {
-        list.innerHTML = `<div class="text-xs text-center text-slate-400 py-4">No pending requests!</div>`;
-        return;
-      }
-      list.innerHTML = pendingRequests.map(r => `
-        <div class="p-3 bg-slate-50 border border-slate-100 rounded-2xl flex items-center justify-between">
-          <div>
-            <h5 class="font-bold text-xs text-slate-800">@${r.senderUsername}</h5>
-            <span class="text-[10px] text-slate-400">${r.senderEmail}</span>
-          </div>
-          <div class="flex gap-1.5">
-            <button onclick="acceptFriend('${r.id}', '${r.senderEmail}', '${r.senderUsername}', '${r.senderBio}')" class="px-2.5 py-1 bg-emerald-500 text-white rounded-xl text-xs font-bold">Accept</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    async function acceptFriend(msgId, email, username, bio) {
-      if (!myFriends.some(f => f.email === email)) {
-        myFriends.push({ email, username, bio });
-        localStorage.setItem(`friends_${currentUser.email}`, JSON.stringify(myFriends));
-      }
-      await sb.from('messages').delete().eq('id', msgId);
-      toggleRequestsDrawer();
-      checkRequests();
-      renderChatsSidebar();
-      alert(`@${username} is now your friend! Opening DM...`);
-      openChatRoom(getDMId(currentUser.email, email), username, 'dm', email);
-    }
-
-    // --- 24H STORIES / STATUS (Instagram/WhatsApp style) ---
+    // --- STATUS / STORIES (WhatsApp Style Cards) ---
     function openAddStatusModal() { document.getElementById("addStatusModal").classList.remove("hidden"); }
     function closeAddStatusModal() { document.getElementById("addStatusModal").classList.add("hidden"); }
 
-    async function publishStatusStory() {
-      const caption = document.getElementById("statusCaption").value.trim();
-      const file = document.getElementById("statusImageInput").files[0];
+    async function submitStatus() {
+      const caption = document.getElementById("statusCaptionInp").value.trim();
+      const file = document.getElementById("statusMediaInp").files[0];
       closeAddStatusModal();
 
-      let imgBase64 = null;
+      let img = null;
       if (file) {
-        imgBase64 = await new Promise(resolve => {
+        img = await new Promise(res => {
           const r = new FileReader();
-          r.onload = e => resolve(e.target.result);
+          r.onload = ev => res(ev.target.result);
           r.readAsDataURL(file);
         });
       }
 
       await sb.from('posts').insert([{
-        content: JSON.stringify({ type: 'story', caption, image: imgBase64, user: myProfile.username }),
         user_email: currentUser.email,
+        content: JSON.stringify({ type: 'status_story', caption, image: img, user: myProfile.name }),
         likes: 0
       }]);
-      loadStories();
+      loadStatuses();
     }
 
-    async function loadStories() {
+    async function loadStatuses() {
       const { data } = await sb.from('posts').select('*').order('created_at', { ascending: false }).limit(20);
-      const stories = (data || []).filter(p => {
-        try { return JSON.parse(p.content).type === 'story'; } catch(e){ return false; }
+      const statuses = (data || []).filter(p => {
+        try { return JSON.parse(p.content).type === 'status_story'; } catch (e) { return false; }
       });
 
-      const tray = document.getElementById("storiesTray");
-      tray.innerHTML = stories.map(s => {
+      const container = document.getElementById("statusCardsContainer");
+      container.innerHTML = statuses.map(s => {
         const payload = JSON.parse(s.content);
         const name = payload.user || s.user_email.split('@')[0];
+        const hasImg = !!payload.image;
+
         return `
-          <div onclick="viewStory(${s.id}, '${name}', \`${(payload.caption || '').replace(/`/g, '')}\`, '${payload.image || ''}', ${s.likes || 0})" class="flex flex-col items-center gap-1 cursor-pointer flex-shrink-0">
-            <div class="w-14 h-14 rounded-full p-0.5 story-ring shadow-sm hover:scale-105 transition">
-              <div class="w-full h-full rounded-full bg-white flex items-center justify-center font-bold text-sm text-pink-600 border border-white">
+          <div onclick="viewStatus(${s.id}, '${name}', \`${(payload.caption || '').replace(/`/g, '')}\`, '${payload.image || ''}', ${s.likes || 0})" class="w-24 h-36 rounded-2xl wa-surface border wa-border flex flex-col justify-between p-2.5 flex-shrink-0 cursor-pointer relative overflow-hidden group">
+            ${hasImg ? `<img src="${payload.image}" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition" />` : ''}
+            <div class="w-9 h-9 rounded-full border-2 border-[#00a884] p-0.5 relative z-10">
+              <div class="w-full h-full rounded-full wa-input flex items-center justify-center font-bold text-xs text-white">
                 ${name[0].toUpperCase()}
               </div>
             </div>
-            <span class="text-[11px] font-semibold text-slate-700 truncate max-w-[60px]">@${name}</span>
+            <div class="relative z-10 bg-black/40 -mx-2.5 -mb-2.5 p-2 rounded-b-2xl">
+              <p class="text-xs font-bold text-white truncate">${name}</p>
+            </div>
           </div>
         `;
       }).join('');
     }
 
-    let activeViewingStoryId = null;
-    let activeViewingStoryLikes = 0;
-    function viewStory(id, user, caption, image, likes) {
-      activeViewingStoryId = id;
-      activeViewingStoryLikes = likes;
-      document.getElementById("storyViewerModal").classList.remove("hidden");
-      document.getElementById("storyViewerUser").innerText = `@${user}`;
-      document.getElementById("storyViewerAvatar").innerText = user[0].toUpperCase();
-      document.getElementById("storyViewerLikes").innerText = likes;
-      document.getElementById("storyViewerText").innerText = caption;
+    let activeStatusId = null;
+    let activeStatusLikes = 0;
+    function viewStatus(id, user, caption, img, likes) {
+      activeStatusId = id;
+      activeStatusLikes = likes;
+      document.getElementById("statusViewerModal").classList.remove("hidden");
+      document.getElementById("stViewUser").innerText = user;
+      document.getElementById("stViewAvatar").innerText = user[0].toUpperCase();
+      document.getElementById("stViewText").innerText = caption;
+      document.getElementById("stViewLikes").innerText = likes;
 
-      const imgEl = document.getElementById("storyViewerImg");
-      if (image) {
-        imgEl.src = image;
+      const imgEl = document.getElementById("stViewImg");
+      if (img) {
+        imgEl.src = img;
         imgEl.classList.remove("hidden");
       } else {
         imgEl.classList.add("hidden");
       }
     }
-    function closeStoryViewer() { document.getElementById("storyViewerModal").classList.add("hidden"); }
-    async function likeCurrentStory() {
-      if (!activeViewingStoryId) return;
-      activeViewingStoryLikes++;
-      document.getElementById("storyViewerLikes").innerText = activeViewingStoryLikes;
-      await sb.from('posts').update({ likes: activeViewingStoryLikes }).eq('id', activeViewingStoryId);
-    }
-
-    // --- PROFILE CUSTOMIZATION ---
-    function openProfileModal() {
-      document.getElementById("profileModal").classList.remove("hidden");
-      document.getElementById("editUsername").value = myProfile.username;
-      document.getElementById("editBio").value = myProfile.bio;
-    }
-    function closeProfileModal() { document.getElementById("profileModal").classList.add("hidden"); }
-    function setAvatarColor(cls) { myProfile.color = cls; }
-    function saveProfile() {
-      myProfile.username = document.getElementById("editUsername").value.trim() || myProfile.username;
-      myProfile.bio = document.getElementById("editBio").value.trim() || myProfile.bio;
-      localStorage.setItem(`profile_${currentUser.email}`, JSON.stringify(myProfile));
-      closeProfileModal();
-      showApp();
+    function closeStatusViewer() { document.getElementById("statusViewerModal").classList.add("hidden"); }
+    async function likeActiveStatus() {
+      if (!activeStatusId) return;
+      activeStatusLikes++;
+      document.getElementById("stViewLikes").innerText = activeStatusLikes;
+      await sb.from('posts').update({ likes: activeStatusLikes }).eq('id', activeStatusId);
     }
 
     // --- CHANNELS ---
     function renderChannels() {
-      const container = document.getElementById("channelsContainer");
-      container.innerHTML = channelsList.map(ch => `
-        <div class="p-4 bg-white border border-slate-100 rounded-2xl flex items-center justify-between shadow-sm">
-          <div>
-            <h4 class="font-bold text-sm text-slate-800">📢 ${ch}</h4>
-            <span class="text-[11px] text-slate-400">Public channel</span>
+      const container = document.getElementById("channelsListContainer");
+      container.innerHTML = customChannels.map(ch => `
+        <div class="flex items-center justify-between wa-surface p-3.5 rounded-2xl border wa-border">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full wa-input flex items-center justify-center font-bold text-white text-base">📢</div>
+            <div>
+              <h4 class="font-bold text-xs text-white">${ch.name}</h4>
+              <p class="text-[11px] text-[#8696a0] truncate max-w-[170px]">${ch.msg}</p>
+            </div>
           </div>
-          <button onclick="openChatRoom('channel_${ch.toLowerCase().replace(/ /g, '_')}', '${ch}', 'room'); switchMainTab('chats');" class="px-3.5 py-1.5 bg-sky-50 text-sky-600 font-bold rounded-xl text-xs hover:bg-sky-100">Join</button>
+          <div class="flex flex-col items-end gap-1">
+            <span class="text-[10px] wa-green font-mono">${ch.time}</span>
+            <span class="text-[10px] wa-bg-green text-[#111b21] font-bold px-1.5 py-0.2 rounded-full">${ch.unread}</span>
+          </div>
         </div>
       `).join('');
     }
-    function openNewGroupModal(type = 'group') {
-      const name = prompt(`Enter ${type} name:`);
-      if (!name) return;
-      channelsList.push(name);
-      renderChannels();
-      openChatRoom(`custom_${name.toLowerCase().replace(/ /g, '_')}`, name, 'room');
-      switchMainTab('chats');
+
+    // --- SEARCH & NEW CHAT ---
+    function openNewChatModal() { document.getElementById("newChatModal").classList.remove("hidden"); }
+    function closeNewChatModal() { document.getElementById("newChatModal").classList.add("hidden"); }
+
+    async function executeUserSearch() {
+      const q = document.getElementById("userSearchInp").value.trim().toLowerCase();
+      const resBox = document.getElementById("userSearchResults");
+      if (!q) return;
+
+      resBox.innerHTML = `<div class="text-xs text-[#8696a0]">Searching...</div>`;
+      const { data } = await sb.from('posts').select('user_email').limit(50);
+      const emails = Array.from(new Set((data || []).map(p => p.user_email))).filter(e => e && e !== currentUser.email);
+      const matched = emails.filter(e => e.toLowerCase().includes(q));
+
+      if (matched.length === 0) {
+        resBox.innerHTML = `
+          <div class="p-3 wa-input rounded-xl flex items-center justify-between">
+            <span class="text-xs text-white">${q}</span>
+            <button onclick="startDirectChat('${q}')" class="px-3 py-1 wa-bg-green text-[#111b21] rounded-lg text-xs font-bold">Chat</button>
+          </div>
+        `;
+        return;
+      }
+
+      resBox.innerHTML = matched.map(m => `
+        <div class="p-3 wa-input rounded-xl flex items-center justify-between">
+          <span class="text-xs text-white">@${m.split('@')[0]}</span>
+          <button onclick="startDirectChat('${m}')" class="px-3 py-1 wa-bg-green text-[#111b21] rounded-lg text-xs font-bold">Chat</button>
+        </div>
+      `).join('');
     }
 
-    // --- WEBRTC CALLING ---
-    function setupWebRTCSignaling() {
-      signalingChannel = sb.channel('pulse_whatsapp_signal')
-        .on('broadcast', { event: 'call_data' }, async payload => {
+    function startDirectChat(email) {
+      const name = email.split('@')[0];
+      const dmId = 'dm_' + [currentUser.email, email].sort().join('___').replace(/[^a-zA-Z0-9_]/g, '_');
+      if (!chatContacts.some(c => c.id === dmId)) {
+        chatContacts.unshift({ id: dmId, name, lastMsg: 'Tap to chat', time: 'Just now', type: 'dm' });
+        localStorage.setItem(`wa_contacts_${currentUser.email}`, JSON.stringify(chatContacts));
+      }
+      closeNewChatModal();
+      renderChatList();
+      openConversation(dmId, name);
+    }
+
+    // --- CALLING (WebRTC) ---
+    function triggerCall(type) {
+      document.getElementById("callOverlay").classList.remove("hidden");
+      document.getElementById("callTargetName").innerText = currentRoomTitle;
+      initRTC(type === 'video');
+    }
+
+    async function initRTC(isVideo) {
+      rtcPeer = new RTCPeerConnection(iceServers);
+      localMediaStream = await navigator.mediaDevices.getUserMedia({ video: isVideo, audio: true });
+      document.getElementById("locVideo").srcObject = localMediaStream;
+      localMediaStream.getTracks().forEach(t => rtcPeer.addTrack(t, localMediaStream));
+
+      rtcPeer.ontrack = e => {
+        document.getElementById("remVideo").srcObject = e.streams[0];
+      };
+      rtcPeer.onicecandidate = e => {
+        if (e.candidate) sendSignal({ type: 'ice', candidate: e.candidate });
+      };
+
+      const offer = await rtcPeer.createOffer();
+      await rtcPeer.setLocalDescription(offer);
+      sendSignal({ type: 'offer', offer, room: currentRoomId, isVideo });
+    }
+
+    function setupSignaling() {
+      sigChannel = sb.channel('wa_rtc_signaling')
+        .on('broadcast', { event: 'signal' }, async payload => {
           const { sender, data } = payload.payload;
           if (sender === currentUser.email) return;
 
           if (data.type === 'offer') {
-            const accept = confirm(`Incoming ${data.callType || 'Video'} call from @${sender.split('@')[0]}! Answer?`);
-            if (accept) {
-              document.getElementById("callModal").classList.remove("hidden");
-              await initWebRTC(data.callType === 'video');
-              await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
-              const answer = await peerConnection.createAnswer();
-              await peerConnection.setLocalDescription(answer);
-              sendCallSignal({ type: 'answer', answer });
+            const ans = confirm(`Incoming ${data.isVideo ? 'Video' : 'Voice'} call from @${sender.split('@')[0]}!`);
+            if (ans) {
+              document.getElementById("callOverlay").classList.remove("hidden");
+              document.getElementById("callTargetName").innerText = `@${sender.split('@')[0]}`;
+              rtcPeer = new RTCPeerConnection(iceServers);
+              localMediaStream = await navigator.mediaDevices.getUserMedia({ video: data.isVideo, audio: true });
+              document.getElementById("locVideo").srcObject = localMediaStream;
+              localMediaStream.getTracks().forEach(t => rtcPeer.addTrack(t, localMediaStream));
+
+              rtcPeer.ontrack = e => {
+                document.getElementById("remVideo").srcObject = e.streams[0];
+              };
+              rtcPeer.onicecandidate = e => {
+                if (e.candidate) sendSignal({ type: 'ice', candidate: e.candidate });
+              };
+
+              await rtcPeer.setRemoteDescription(new RTCSessionDescription(data.offer));
+              const answer = await rtcPeer.createAnswer();
+              await rtcPeer.setLocalDescription(answer);
+              sendSignal({ type: 'answer', answer });
             }
-          } else if (data.type === 'answer' && peerConnection) {
-            await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
-          } else if (data.type === 'ice' && peerConnection && data.candidate) {
-            try { await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate)); } catch(e){}
+          } else if (data.type === 'answer' && rtcPeer) {
+            await rtcPeer.setRemoteDescription(new RTCSessionDescription(data.answer));
+          } else if (data.type === 'ice' && rtcPeer && data.candidate) {
+            try { await rtcPeer.addIceCandidate(new RTCIceCandidate(data.candidate)); } catch(e){}
           } else if (data.type === 'hangup') {
-            endCall(false);
+            hangupCall(false);
           }
         }).subscribe();
     }
 
-    function sendCallSignal(data) {
-      if (signalingChannel) {
-        signalingChannel.send({
+    function sendSignal(data) {
+      if (sigChannel) {
+        sigChannel.send({
           type: 'broadcast',
-          event: 'call_data',
+          event: 'signal',
           payload: { sender: currentUser.email, data }
         });
       }
     }
 
-    async function startCall(callType = 'video') {
-      document.getElementById("callModal").classList.remove("hidden");
-      document.getElementById("callTypeTitle").innerText = `${callType} Call`;
-      await initWebRTC(callType === 'video');
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(offer);
-      sendCallSignal({ type: 'offer', offer, callType });
+    function hangupCall(notify = true) {
+      if (notify) sendSignal({ type: 'hangup' });
+      if (rtcPeer) { rtcPeer.close(); rtcPeer = null; }
+      if (localMediaStream) { localMediaStream.getTracks().forEach(t => t.stop()); localMediaStream = null; }
+      document.getElementById("callOverlay").classList.add("hidden");
     }
 
-    async function initWebRTC(withVideo = true) {
-      peerConnection = new RTCPeerConnection(rtcConfig);
-      localStream = await navigator.mediaDevices.getUserMedia({ video: withVideo, audio: true });
-      document.getElementById("localVideo").srcObject = localStream;
-      localStream.getTracks().forEach(t => peerConnection.addTrack(t, localStream));
-
-      peerConnection.ontrack = e => {
-        document.getElementById("remoteVideo").srcObject = e.streams[0];
-      };
-      peerConnection.onicecandidate = e => {
-        if (e.candidate) sendCallSignal({ type: 'ice', candidate: e.candidate });
-      };
+    function toggleCallMic() {
+      if (!localMediaStream) return;
+      const t = localMediaStream.getAudioTracks()[0];
+      if (t) { t.enabled = !t.enabled; document.getElementById("callMicBtn").innerText = t.enabled ? '🎙️' : '🔇'; }
+    }
+    function toggleCallCam() {
+      if (!localMediaStream) return;
+      const t = localMediaStream.getVideoTracks()[0];
+      if (t) { t.enabled = !t.enabled; document.getElementById("callCamBtn").innerText = t.enabled ? '📷' : '🚫'; }
     }
 
-    function endCall(notify = true) {
-      if (notify) sendCallSignal({ type: 'hangup' });
-      if (peerConnection) { peerConnection.close(); peerConnection = null; }
-      if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
-      document.getElementById("callModal").classList.add("hidden");
+    function listenIncomingSignals() {
+      setupSignaling();
     }
 
-    function toggleMic() {
-      if (!localStream) return;
-      const t = localStream.getAudioTracks()[0];
-      if (t) { t.enabled = !t.enabled; document.getElementById("micBtn").innerText = t.enabled ? '🎙️' : '🔇'; }
+    // --- PROFILE ---
+    function openProfileModal() {
+      document.getElementById("profileModal").classList.remove("hidden");
+      document.getElementById("editNameInp").value = myProfile.name;
+      document.getElementById("editBioInp").value = myProfile.bio;
+      toggleMenu(false);
     }
-    function toggleCam() {
-      if (!localStream) return;
-      const t = localStream.getVideoTracks()[0];
-      if (t) { t.enabled = !t.enabled; document.getElementById("camBtn").innerText = t.enabled ? '📷' : '🚫'; }
+    function closeProfileModal() { document.getElementById("profileModal").classList.add("hidden"); }
+    function saveUserProfile() {
+      myProfile.name = document.getElementById("editNameInp").value.trim() || myProfile.name;
+      myProfile.bio = document.getElementById("editBioInp").value.trim() || myProfile.bio;
+      localStorage.setItem(`wa_prof_${currentUser.email}`, JSON.stringify(myProfile));
+      closeProfileModal();
+    }
+
+    function toggleMenu(force) {
+      const m = document.getElementById("moreMenu");
+      if (typeof force === 'boolean') m.classList.toggle("hidden", !force);
+      else m.classList.toggle("hidden");
     }
 
     window.onload = init;
