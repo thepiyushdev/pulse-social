@@ -3,161 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Pulse — Modern Social & Live Channels</title>
+  <title>Pulse — Ultimate Dev Social & Real-time Space</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #0B0E14; }
-    ::-webkit-scrollbar-thumb { background: #222838; border-radius: 9999px; }
-    ::-webkit-scrollbar-thumb:hover { background: #374151; }
+    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar-track { background: #090D14; }
+    ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 9999px; }
+    .pulse-glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); }
   </style>
 </head>
-<body class="bg-[#0B0E14] text-slate-100 min-h-screen font-sans antialiased flex flex-col items-center selection:bg-emerald-500 selection:text-white">
+<body class="bg-[#080B10] text-slate-100 min-h-screen font-sans flex flex-col items-center selection:bg-emerald-500 selection:text-white">
 
   <!-- AUTH SCREEN -->
   <div id="authScreen" class="min-h-screen flex items-center justify-center p-4 w-full">
-    <div class="bg-[#121620] border border-[#222838] p-8 rounded-3xl w-full max-w-sm shadow-2xl relative overflow-hidden">
-      <div class="absolute -top-16 -right-16 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
-      <div class="flex items-center gap-2 mb-2">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-base shadow-lg shadow-emerald-500/20">P</div>
+    <div class="bg-[#0F141E] border border-[#1E2638] p-8 rounded-3xl w-full max-w-sm shadow-2xl relative overflow-hidden">
+      <div class="flex items-center gap-2.5 mb-2">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-base shadow-lg shadow-emerald-500/20">P</div>
         <h1 class="text-2xl font-black tracking-tight text-white">Pulse<span class="text-emerald-400">.</span></h1>
       </div>
-      <p class="text-xs text-slate-400 mb-6">Real-time dev spaces, channels & feed</p>
+      <p class="text-xs text-slate-400 mb-6">Realtime Audio/Video, Channels & Dev Feed</p>
 
       <div class="space-y-3">
         <div>
-          <label class="text-[11px] font-semibold uppercase text-slate-400 tracking-wider">Email</label>
-          <input id="authEmail" type="email" placeholder="dev@pulse.app" class="mt-1 w-full px-3.5 py-2.5 bg-[#181E2C] border border-[#2B3347] rounded-xl text-sm outline-none focus:border-emerald-500 text-white transition placeholder-slate-500" />
+          <label class="text-[11px] font-semibold uppercase text-slate-400">Email</label>
+          <input id="authEmail" type="email" placeholder="dev@pulse.app" class="mt-1 w-full px-3.5 py-2.5 bg-[#161C2A] border border-[#252E42] rounded-xl text-sm outline-none focus:border-emerald-500 text-white" />
         </div>
         <div>
-          <label class="text-[11px] font-semibold uppercase text-slate-400 tracking-wider">Password</label>
-          <input id="authPass" type="password" placeholder="••••••••" class="mt-1 w-full px-3.5 py-2.5 bg-[#181E2C] border border-[#2B3347] rounded-xl text-sm outline-none focus:border-emerald-500 text-white transition placeholder-slate-500" />
+          <label class="text-[11px] font-semibold uppercase text-slate-400">Password</label>
+          <input id="authPass" type="password" placeholder="••••••••" class="mt-1 w-full px-3.5 py-2.5 bg-[#161C2A] border border-[#252E42] rounded-xl text-sm outline-none focus:border-emerald-500 text-white" />
         </div>
       </div>
 
       <div class="flex gap-2.5 mt-6">
-        <button onclick="handleAuth('login')" class="flex-1 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl font-bold text-sm shadow-lg shadow-emerald-500/25 transition">Log In</button>
-        <button onclick="handleAuth('signup')" class="flex-1 py-2.5 bg-[#181E2C] hover:bg-[#202738] border border-[#2B3347] rounded-xl font-bold text-sm transition">Sign Up</button>
+        <button onclick="handleAuth('login')" class="flex-1 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl font-bold text-sm transition">Log In</button>
+        <button onclick="handleAuth('signup')" class="flex-1 py-2.5 bg-[#161C2A] hover:bg-[#1E2638] border border-[#252E42] rounded-xl font-bold text-sm transition">Sign Up</button>
       </div>
       <p id="authMsg" class="text-xs text-center mt-3 text-amber-400 min-h-[16px]"></p>
     </div>
   </div>
 
-  <!-- MAIN APP CONTAINER -->
-  <div id="mainApp" class="hidden w-full max-w-4xl flex-1 flex flex-col min-h-screen border-x border-[#1C2230]">
+  <!-- MAIN APP -->
+  <div id="mainApp" class="hidden w-full max-w-5xl flex-1 flex flex-col min-h-screen border-x border-[#161C28]">
     
     <!-- Top Navbar -->
-    <header class="w-full border-b border-[#1C2230] px-4 py-3 flex items-center justify-between sticky top-0 bg-[#0B0E14]/90 backdrop-blur-md z-30">
+    <header class="w-full border-b border-[#161C28] px-4 py-3 flex items-center justify-between sticky top-0 bg-[#080B10]/90 backdrop-blur-md z-30">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-sm shadow-md shadow-emerald-500/20">P</div>
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-sm">P</div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-extrabold text-white text-base tracking-tight">Pulse</span>
-            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded font-mono">v2.0</span>
+            <span class="font-extrabold text-white text-base tracking-tight">Pulse OS</span>
+            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.2 rounded font-mono">v3.0 Live</span>
           </div>
-          <p id="navSubtext" class="text-[11px] text-slate-400 flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span id="userBadge"></span>
-          </p>
+          <span id="userBadge" class="text-[11px] text-slate-400 font-mono"></span>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="openCreateRoomModal()" class="px-2.5 py-1.5 bg-[#181E2C] hover:bg-[#222A3D] border border-[#2B3347] rounded-lg text-xs font-semibold flex items-center gap-1.5 text-emerald-400">
-          <span>+</span> Room
-        </button>
-        <button onclick="logout()" class="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-semibold transition">
-          Exit
-        </button>
+        <button onclick="openPollModal()" class="px-2.5 py-1.5 bg-[#121722] hover:bg-[#1B2334] border border-[#222B3E] rounded-xl text-xs font-semibold text-emerald-400">📊 Poll</button>
+        <button onclick="startVideoCall()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow-lg shadow-indigo-600/30">📹 Live Call</button>
+        <button onclick="logout()" class="px-2.5 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-xl text-xs font-semibold">Exit</button>
       </div>
     </header>
 
     <!-- Navigation Tabs -->
-    <div class="flex border-b border-[#1C2230] bg-[#0E121A] text-xs font-bold uppercase tracking-wider">
-      <button id="tabChatBtn" onclick="switchTab('chat')" class="flex-1 py-3 text-center border-b-2 border-emerald-500 text-emerald-400 flex items-center justify-center gap-2">
-        <span>💬</span> Live Channels & Rooms
-      </button>
-      <button id="tabFeedBtn" onclick="switchTab('feed')" class="flex-1 py-3 text-center text-slate-400 hover:text-white border-b-2 border-transparent flex items-center justify-center gap-2">
-        <span>⚡</span> Community Feed
-      </button>
+    <div class="flex border-b border-[#161C28] bg-[#0C1017] text-xs font-bold uppercase tracking-wider">
+      <button id="tabChatBtn" onclick="switchTab('chat')" class="flex-1 py-3 text-center border-b-2 border-emerald-500 text-emerald-400">💬 Realtime Channels</button>
+      <button id="tabFeedBtn" onclick="switchTab('feed')" class="flex-1 py-3 text-center text-slate-400 hover:text-white border-b-2 border-transparent">⚡ Community Pulse</button>
     </div>
 
-    <!-- VIEW 1: LIVE ROOMS & CHANNELS -->
+    <!-- VIEW 1: LIVE CHAT & CALLS -->
     <div id="chatView" class="flex-1 flex flex-col md:flex-row overflow-hidden h-[calc(100vh-105px)]">
-      <!-- Rooms Sidebar -->
-      <aside class="w-full md:w-64 border-b md:border-b-0 md:border-r border-[#1C2230] bg-[#0E121A]/60 p-3 flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto">
-        <div class="hidden md:flex items-center justify-between px-2 py-1 mb-1">
-          <span class="text-[11px] font-bold uppercase text-slate-500 tracking-wider">Channels</span>
-        </div>
-        <div id="roomListContainer" class="flex md:flex-col gap-1.5 w-full"></div>
+      
+      <!-- Channels Sidebar -->
+      <aside class="w-full md:w-60 border-b md:border-b-0 md:border-r border-[#161C28] bg-[#0C1017]/70 p-3 flex md:flex-col gap-1.5 overflow-x-auto md:overflow-y-auto">
+        <div class="text-[10px] font-bold uppercase text-slate-500 px-2 py-1 hidden md:block">Rooms</div>
+        <div id="roomListContainer" class="flex md:flex-col gap-1 w-full"></div>
       </aside>
 
-      <!-- Active Chat Area -->
-      <main class="flex-1 flex flex-col bg-[#0B0E14] overflow-hidden">
-        <!-- Room Header -->
-        <div class="px-4 py-2.5 border-b border-[#1C2230] bg-[#10141D] flex items-center justify-between">
+      <!-- Chat Workspace -->
+      <main class="flex-1 flex flex-col bg-[#080B10] overflow-hidden">
+        <!-- Room Status & Typing Indicator Bar -->
+        <div class="px-4 py-2 border-b border-[#161C28] bg-[#0E131C] flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <span class="text-slate-400 font-mono text-base">#</span>
-            <span id="activeRoomTitle" class="font-bold text-sm text-white capitalize">general</span>
+            <span class="text-slate-500 font-mono">#</span>
+            <span id="activeRoomTitle" class="font-bold text-sm text-white">general</span>
+            <span id="typingIndicator" class="text-[11px] text-emerald-400 italic ml-2 hidden animate-pulse">someone is typing...</span>
           </div>
-          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Live Sync</span>
+          <span class="text-[10px] text-slate-400">Bot: <code class="text-emerald-400 font-mono">/ai prompt</code></span>
         </div>
 
         <!-- Messages Stream -->
         <div id="messagesBox" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
 
-        <!-- Active Reply Preview Bar -->
-        <div id="replyPreviewBar" class="hidden px-4 py-2 bg-[#141924] border-t border-[#222838] flex items-center justify-between text-xs">
+        <!-- Quoted Reply Bar -->
+        <div id="replyPreviewBar" class="hidden px-4 py-2 bg-[#121722] border-t border-[#20293B] flex items-center justify-between text-xs">
           <div class="flex items-center gap-2 truncate">
             <span class="text-emerald-400 font-bold">Replying to <span id="replyUserLabel"></span>:</span>
-            <span id="replyTextLabel" class="text-slate-400 truncate max-w-xs italic"></span>
+            <span id="replyTextLabel" class="text-slate-400 truncate italic"></span>
           </div>
-          <button onclick="cancelReply()" class="text-slate-400 hover:text-white font-bold px-2 py-0.5">✕</button>
+          <button onclick="cancelReply()" class="text-slate-400 hover:text-white font-bold px-2">✕</button>
         </div>
 
         <!-- Chat Input Bar -->
-        <div class="p-3 bg-[#0E121A] border-t border-[#1C2230]">
-          <div class="flex gap-2 items-center bg-[#151B27] border border-[#262E42] rounded-2xl px-3 py-1.5 focus-within:border-emerald-500 transition">
-            <input id="chatInput" type="text" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Message in channel... (type @ to tag)" class="w-full bg-transparent text-sm text-white placeholder-slate-500 outline-none py-1.5" />
-            <div class="flex items-center gap-1">
-              <button onclick="insertEmoji('🔥')" class="text-sm p-1 hover:bg-[#202738] rounded">🔥</button>
-              <button onclick="insertEmoji('🚀')" class="text-sm p-1 hover:bg-[#202738] rounded">🚀</button>
-              <button onclick="sendChatMessage()" class="ml-1 px-3.5 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition">Send</button>
+        <div class="p-3 bg-[#0C1017] border-t border-[#161C28]">
+          <div class="flex gap-2 items-center bg-[#131824] border border-[#222A3D] rounded-2xl px-3 py-1.5 focus-within:border-emerald-500 transition">
+            <input id="chatInput" type="text" oninput="handleTyping()" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Message in #channel or /ai to ask bot..." class="w-full bg-transparent text-sm text-white placeholder-slate-500 outline-none py-1.5" />
+            
+            <div class="flex items-center gap-1.5">
+              <!-- Voice Record Button -->
+              <button id="recordBtn" onclick="toggleAudioRecording()" class="p-2 bg-[#1B2232] hover:bg-[#252E42] text-slate-300 hover:text-rose-400 rounded-xl transition" title="Voice Note">
+                🎤
+              </button>
+              <button onclick="sendChatMessage()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition">Send</button>
             </div>
           </div>
         </div>
       </main>
     </div>
 
-    <!-- VIEW 2: FEED -->
+    <!-- VIEW 2: FEED WITH COMMENTS DRAWER -->
     <main id="feedView" class="hidden p-4 space-y-4 flex-1 max-w-2xl mx-auto w-full">
-      <!-- Post Composer -->
-      <div class="bg-[#121620] border border-[#222838] rounded-2xl p-4 shadow-xl">
-        <textarea id="postContent" placeholder="What's your latest tech update or thought?" class="w-full bg-transparent text-sm text-white resize-none outline-none h-20 placeholder-slate-500"></textarea>
-        <div class="flex items-center justify-between pt-3 border-t border-[#1F2535]">
+      <div class="bg-[#0F141E] border border-[#1E2638] rounded-2xl p-4 shadow-xl">
+        <textarea id="postContent" placeholder="Share a build update, launch, or code tip..." class="w-full bg-transparent text-sm text-white resize-none outline-none h-20 placeholder-slate-500"></textarea>
+        <div class="flex items-center justify-between pt-3 border-t border-[#182030]">
           <div class="flex gap-1.5 text-xs text-slate-400">
-            <button onclick="addHashtag('#build')" class="px-2 py-0.5 bg-[#181E2C] rounded-md hover:text-emerald-400">#build</button>
-            <button onclick="addHashtag('#showcase')" class="px-2 py-0.5 bg-[#181E2C] rounded-md hover:text-emerald-400">#showcase</button>
-            <button onclick="addHashtag('#bug')" class="px-2 py-0.5 bg-[#181E2C] rounded-md hover:text-emerald-400">#bug</button>
+            <button onclick="addHashtag('#build')" class="px-2 py-0.5 bg-[#141A26] rounded hover:text-emerald-400">#build</button>
+            <button onclick="addHashtag('#showcase')" class="px-2 py-0.5 bg-[#141A26] rounded hover:text-emerald-400">#showcase</button>
+            <button onclick="addHashtag('#ask')" class="px-2 py-0.5 bg-[#141A26] rounded hover:text-emerald-400">#ask</button>
           </div>
-          <button onclick="publishPost()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition shadow-lg shadow-emerald-500/20">Publish Pulse</button>
+          <button onclick="publishPost()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition">Publish Pulse</button>
         </div>
       </div>
-      <div id="postsList" class="space-y-3"></div>
+      <div id="postsList" class="space-y-4"></div>
     </main>
   </div>
 
-  <!-- CREATE ROOM MODAL -->
-  <div id="createRoomModal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-[#121620] border border-[#222838] p-6 rounded-2xl w-full max-w-sm shadow-2xl">
-      <h3 class="text-base font-bold text-white mb-1">Create Custom Room</h3>
-      <p class="text-xs text-slate-400 mb-4">Enter a clean room slug (e.g. backend-crew, ai-tools)</p>
-      <input id="newRoomInput" type="text" placeholder="room-name" class="w-full p-2.5 bg-[#181E2C] border border-[#2B3347] rounded-xl text-sm outline-none focus:border-emerald-500 text-white mb-4" />
+  <!-- WEBRTC AUDIO/VIDEO CALL MODAL -->
+  <div id="callModal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 z-50">
+    <div class="w-full max-w-3xl bg-[#0F141E] border border-[#20293B] rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+      <div class="p-4 border-b border-[#20293B] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="font-bold text-sm text-white">Live Call Room</span>
+        </div>
+        <button onclick="endCall()" class="px-3 py-1 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-xs">Hang Up</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 p-4 bg-black/60 min-h-[300px]">
+        <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
+          <video id="localVideo" autoplay playsinline muted class="w-full h-full object-cover"></video>
+          <span class="absolute bottom-2 left-2 text-[10px] bg-black/60 px-2 py-1 rounded text-white font-mono">You (Local)</span>
+        </div>
+        <div class="relative bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 flex items-center justify-center">
+          <video id="remoteVideo" autoplay playsinline class="w-full h-full object-cover"></video>
+          <span class="absolute bottom-2 left-2 text-[10px] bg-black/60 px-2 py-1 rounded text-white font-mono">Peer (Live)</span>
+        </div>
+      </div>
+
+      <div class="p-3 bg-[#0A0E15] border-t border-[#1C2434] flex items-center justify-center gap-3">
+        <button onclick="toggleAudioTrack()" id="muteMicBtn" class="px-3 py-2 bg-[#161C28] hover:bg-[#202838] rounded-xl text-xs font-semibold">🎙️ Mute</button>
+        <button onclick="toggleVideoTrack()" id="camToggleBtn" class="px-3 py-2 bg-[#161C28] hover:bg-[#202838] rounded-xl text-xs font-semibold">📷 Cam Off</button>
+        <button onclick="shareScreen()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold">🖥️ Share Screen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- POLL CREATOR MODAL -->
+  <div id="pollModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="bg-[#0F141E] border border-[#20293B] p-6 rounded-2xl w-full max-w-sm shadow-2xl">
+      <h3 class="text-sm font-bold text-white mb-2">Create Live Poll</h3>
+      <input id="pollQuestion" type="text" placeholder="Poll Question..." class="w-full p-2.5 bg-[#161C2A] border border-[#242D40] rounded-xl text-xs text-white mb-2 outline-none" />
+      <input id="pollOpt1" type="text" placeholder="Option 1" class="w-full p-2 bg-[#161C2A] border border-[#242D40] rounded-xl text-xs text-white mb-2 outline-none" />
+      <input id="pollOpt2" type="text" placeholder="Option 2" class="w-full p-2 bg-[#161C2A] border border-[#242D40] rounded-xl text-xs text-white mb-4 outline-none" />
       <div class="flex gap-2">
-        <button onclick="closeCreateRoomModal()" class="flex-1 py-2 bg-[#181E2C] hover:bg-[#202738] rounded-xl text-xs font-bold">Cancel</button>
-        <button onclick="confirmCreateRoom()" class="flex-1 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-bold">Create & Join</button>
+        <button onclick="closePollModal()" class="flex-1 py-2 bg-[#161C28] rounded-xl text-xs font-bold">Cancel</button>
+        <button onclick="submitPoll()" class="flex-1 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl text-xs font-bold">Post Poll</button>
       </div>
     </div>
   </div>
@@ -165,24 +186,30 @@
   <script>
     const SB_URL = "https://tynoyujftmziutiytgsa.supabase.co";
     const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR5bm95dWpmdG16aXV0aXl0Z3NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA2NjE3MzQsImV4cCI6MjEwNjIzNzczNH0.71VfM08bzaxu__Idm3sp00VHzly9CSss9WwA-l5Fd5g";
+    const GEMINI_API_KEY = "AQ.Ab8RN6KmhHgTqYsFFa3GqzljV1ZToW6k4xNjgBaLLllE8G52BA";
+
     const sb = supabase.createClient(SB_URL, SB_KEY);
 
     let currentUser = null;
     let currentRoom = "general";
     let chatChannel = null;
     let activeReply = null;
+    let typingTimeout = null;
 
-    let availableRooms = ["general", "dev-chat", "showcase", "random", "bugs-help"];
+    // WebRTC Variables
+    let peerConnection = null;
+    let localStream = null;
+    let callBroadcastChannel = null;
+    const rtcConfig = { iceServers: [{ urls: "stun:stun.l.google.com:19302" }] };
+
+    // Voice Note Recorder Variables
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    const availableRooms = ["general", "voice-lounge", "showcase", "dev-help", "ai-chat"];
 
     async function init() {
-      // Check stored custom rooms
-      const savedRooms = localStorage.getItem("pulse_custom_rooms");
-      if (savedRooms) {
-        try {
-          const parsed = JSON.parse(savedRooms);
-          availableRooms = Array.from(new Set([...availableRooms, ...parsed]));
-        } catch (e) {}
-      }
       checkSession();
     }
 
@@ -202,11 +229,8 @@
       const password = document.getElementById("authPass").value.trim();
       const msg = document.getElementById("authMsg");
 
-      if (!email || !password) {
-        msg.innerText = "Email aur password fill karo!";
-        return;
-      }
-      msg.innerText = "Authenticating...";
+      if (!email || !password) return msg.innerText = "Email & password required";
+      msg.innerText = "Connecting...";
 
       try {
         let res = type === 'signup' 
@@ -232,13 +256,12 @@
     function showApp() {
       document.getElementById("authScreen").classList.add("hidden");
       document.getElementById("mainApp").classList.remove("hidden");
-      const name = currentUser.email.split('@')[0];
-      document.getElementById("userBadge").innerText = `@${name}`;
-
+      document.getElementById("userBadge").innerText = `@${currentUser.email.split('@')[0]}`;
       renderRoomList();
-      joinChatRoom(currentRoom);
+      joinChatRoom("general");
       loadPosts();
       setupRealtimePosts();
+      setupSignaling();
     }
 
     function switchTab(tab) {
@@ -250,48 +273,27 @@
       if (tab === 'feed') {
         feed.classList.remove("hidden");
         chat.classList.add("hidden");
-        feedBtn.className = "flex-1 py-3 text-center border-b-2 border-emerald-500 text-emerald-400 flex items-center justify-center gap-2";
-        chatBtn.className = "flex-1 py-3 text-center text-slate-400 hover:text-white border-b-2 border-transparent flex items-center justify-center gap-2";
+        feedBtn.className = "flex-1 py-3 text-center border-b-2 border-emerald-500 text-emerald-400";
+        chatBtn.className = "flex-1 py-3 text-center text-slate-400 hover:text-white border-b-2 border-transparent";
       } else {
         feed.classList.add("hidden");
         chat.classList.remove("hidden");
-        chatBtn.className = "flex-1 py-3 text-center border-b-2 border-emerald-500 text-emerald-400 flex items-center justify-center gap-2";
-        feedBtn.className = "flex-1 py-3 text-center text-slate-400 hover:text-white border-b-2 border-transparent flex items-center justify-center gap-2";
+        chatBtn.className = "flex-1 py-3 text-center border-b-2 border-emerald-500 text-emerald-400";
+        feedBtn.className = "flex-1 py-3 text-center text-slate-400 hover:text-white border-b-2 border-transparent";
       }
     }
 
-    // --- ROOM LOGIC ---
+    // --- CHAT ROOMS & MESSAGING ---
     function renderRoomList() {
       const container = document.getElementById("roomListContainer");
       container.innerHTML = availableRooms.map(r => `
-        <button onclick="joinChatRoom('${r}')" class="px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition ${currentRoom === r ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'text-slate-400 hover:bg-[#181E2C] hover:text-slate-200'}">
+        <button onclick="joinChatRoom('${r}')" class="px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition ${currentRoom === r ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'text-slate-400 hover:bg-[#141A26]'}">
           <span class="text-slate-500">#</span>
           <span>${r}</span>
         </button>
       `).join('');
     }
 
-    function openCreateRoomModal() {
-      document.getElementById("createRoomModal").classList.remove("hidden");
-      document.getElementById("newRoomInput").focus();
-    }
-    function closeCreateRoomModal() {
-      document.getElementById("createRoomModal").classList.add("hidden");
-    }
-    function confirmCreateRoom() {
-      const name = document.getElementById("newRoomInput").value.trim().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
-      if (!name) return;
-      if (!availableRooms.includes(name)) {
-        availableRooms.push(name);
-        localStorage.setItem("pulse_custom_rooms", JSON.stringify(availableRooms));
-      }
-      closeCreateRoomModal();
-      document.getElementById("newRoomInput").value = "";
-      renderRoomList();
-      joinChatRoom(name);
-    }
-
-    // --- CHAT & REPLIES ---
     async function joinChatRoom(room) {
       currentRoom = room;
       cancelReply();
@@ -299,119 +301,361 @@
       renderRoomList();
 
       const box = document.getElementById("messagesBox");
-      box.innerHTML = `<div class="text-[11px] text-center text-slate-500 py-3">Joined #${room}. Messages are encrypted & live synced.</div>`;
+      box.innerHTML = `<div class="text-[11px] text-center text-slate-500 py-3">Connected to #${room}</div>`;
 
-      const { data } = await sb.from('messages').select('*').eq('room_id', room).order('created_at', { ascending: true }).limit(80);
-      if (data) {
-        data.forEach(m => appendChatMessage(m));
-      }
+      const { data } = await sb.from('messages').select('*').eq('room_id', room).order('created_at', { ascending: true }).limit(60);
+      if (data) data.forEach(m => appendChatMessage(m));
 
       if (chatChannel) sb.removeChannel(chatChannel);
 
       chatChannel = sb.channel(`room-${room}`)
         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `room_id=eq.${room}` }, payload => {
           appendChatMessage(payload.new);
-        }).subscribe();
+        })
+        .on('broadcast', { event: 'typing' }, payload => {
+          if (payload.payload.user !== currentUser.email.split('@')[0]) {
+            const ind = document.getElementById("typingIndicator");
+            ind.innerText = `@${payload.payload.user} is typing...`;
+            ind.classList.remove("hidden");
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => ind.classList.add("hidden"), 2000);
+          }
+        })
+        .subscribe();
     }
 
-    function parseMessageContent(raw) {
+    function handleTyping() {
+      if (chatChannel) {
+        chatChannel.send({
+          type: 'broadcast',
+          event: 'typing',
+          payload: { user: currentUser.email.split('@')[0] }
+        });
+      }
+    }
+
+    function parsePayload(raw) {
       try {
-        const parsed = JSON.parse(raw);
-        if (typeof parsed === 'object' && parsed.text) return parsed;
+        const obj = JSON.parse(raw);
+        if (typeof obj === 'object') return obj;
       } catch (e) {}
-      return { text: raw, reply: null };
+      return { text: raw, type: 'text' };
     }
 
     function appendChatMessage(m) {
       const box = document.getElementById("messagesBox");
       const isMe = m.user_email === currentUser.email;
-      const sender = m.user_email?.split('@')[0] || 'dev';
+      const isAI = m.user_email === 'pulse-ai@system';
+      const sender = isAI ? 'PulseBot (AI)' : (m.user_email?.split('@')[0] || 'dev');
       const time = new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const parsed = parseMessageContent(m.message);
+      const data = parsePayload(m.message);
 
       const msgEl = document.createElement("div");
-      msgEl.className = `flex flex-col group ${isMe ? 'items-end' : 'items-start'} transition-all`;
+      msgEl.className = `flex flex-col group ${isMe ? 'items-end' : 'items-start'}`;
 
-      let replyQuoteHtml = '';
-      if (parsed.reply) {
-        replyQuoteHtml = `
-          <div class="mb-1 text-[11px] px-2.5 py-1 bg-black/30 border-l-2 border-emerald-400 rounded text-slate-400 flex items-center gap-1.5">
-            <span class="text-emerald-400 font-semibold font-mono">↳ @${parsed.reply.user}:</span>
-            <span class="truncate max-w-[180px] italic">${parsed.reply.text}</span>
+      let replyHtml = '';
+      if (data.reply) {
+        replyHtml = `
+          <div class="mb-1 text-[11px] px-2 py-0.5 bg-black/40 border-l-2 border-emerald-400 rounded text-slate-400">
+            <span class="text-emerald-400 font-mono">↳ @${data.reply.user}:</span> ${data.reply.text}
           </div>
         `;
       }
 
-      // Format mentions
-      let formattedText = parsed.text.replace(/@([a-zA-Z0-9_-]+)/g, '<span class="text-emerald-400 font-bold bg-emerald-500/10 px-1 rounded">@$1</span>');
+      let contentHtml = '';
+      if (data.type === 'audio') {
+        contentHtml = `
+          <div class="flex items-center gap-2">
+            <audio controls src="${data.audio}" class="h-8 w-48 sm:w-60"></audio>
+          </div>
+        `;
+      } else if (data.type === 'poll') {
+        contentHtml = `
+          <div class="space-y-2 p-1">
+            <div class="font-bold text-xs text-white">📊 ${data.question}</div>
+            <button onclick="votePoll(${m.id}, 1)" class="w-full text-left px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs hover:border-emerald-500">${data.opt1} <span class="float-right font-mono">${data.votes1 || 0}</span></button>
+            <button onclick="votePoll(${m.id}, 2)" class="w-full text-left px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-lg text-xs hover:border-emerald-500">${data.opt2} <span class="float-right font-mono">${data.votes2 || 0}</span></button>
+          </div>
+        `;
+      } else {
+        let txt = (data.text || '').replace(/@([a-zA-Z0-9_-]+)/g, '<span class="text-emerald-400 font-semibold">@$1</span>');
+        contentHtml = `<div class="leading-relaxed break-words">${txt}</div>`;
+      }
 
       msgEl.innerHTML = `
         <div class="flex items-center gap-2 mb-0.5 px-1">
-          <button onclick="mentionUser('${sender}')" class="text-[11px] font-bold text-slate-400 hover:text-emerald-400 transition">@${sender}</button>
+          <span class="text-[11px] font-bold ${isAI ? 'text-indigo-400 font-mono' : 'text-slate-400'}">${sender}</span>
           <span class="text-[9px] text-slate-600 font-mono">${time}</span>
         </div>
         <div class="relative max-w-sm sm:max-w-md">
-          <div class="px-3.5 py-2 rounded-2xl text-xs ${isMe ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-tr-none' : 'bg-[#181E2C] border border-[#2B3347] text-slate-200 rounded-tl-none'} shadow-md">
-            ${replyQuoteHtml}
-            <div class="leading-relaxed break-words">${formattedText}</div>
+          <div class="px-3.5 py-2 rounded-2xl text-xs ${isAI ? 'bg-indigo-950 border border-indigo-700/60 text-indigo-100' : (isMe ? 'bg-emerald-600 text-white rounded-tr-none' : 'bg-[#141A26] border border-[#222A3D] text-slate-200 rounded-tl-none')} shadow">
+            ${replyHtml}
+            ${contentHtml}
           </div>
-          <!-- Quick Actions on Message -->
-          <div class="absolute -bottom-2 ${isMe ? 'left-0' : 'right-0'} opacity-0 group-hover:opacity-100 flex items-center gap-1 bg-[#10141D] border border-[#2B3347] px-1.5 py-0.5 rounded-full shadow-lg transition">
-            <button onclick="startReply('${sender}', \`${parsed.text.replace(/`/g, '\\`')}\`)" title="Reply" class="text-[11px] text-slate-400 hover:text-emerald-400 px-1">↩ Reply</button>
-            <button onclick="quickReact('${sender}')" title="Mention" class="text-[11px] text-slate-400 hover:text-white px-1">@</button>
-          </div>
+          ${!isAI ? `
+            <div class="absolute -bottom-2 ${isMe ? 'left-0' : 'right-0'} opacity-0 group-hover:opacity-100 flex items-center bg-[#0C1017] border border-[#222A3D] px-1.5 py-0.5 rounded-full shadow text-[10px]">
+              <button onclick="startReply('${sender}', \`${(data.text || 'media').substring(0, 35)}\`)" class="text-slate-400 hover:text-emerald-400 px-1">↩</button>
+            </div>
+          ` : ''}
         </div>
       `;
       box.appendChild(msgEl);
       box.scrollTop = box.scrollHeight;
     }
 
-    function mentionUser(sender) {
-      const inp = document.getElementById("chatInput");
-      inp.value = `@${sender} ` + inp.value;
-      inp.focus();
-    }
-
-    function startReply(sender, text) {
-      activeReply = { user: sender, text: text.substring(0, 50) };
-      document.getElementById("replyUserLabel").innerText = `@${sender}`;
-      document.getElementById("replyTextLabel").innerText = `"${text.substring(0, 45)}..."`;
+    function startReply(user, text) {
+      activeReply = { user, text };
+      document.getElementById("replyUserLabel").innerText = `@${user}`;
+      document.getElementById("replyTextLabel").innerText = `"${text}..."`;
       document.getElementById("replyPreviewBar").classList.remove("hidden");
       document.getElementById("chatInput").focus();
     }
-
     function cancelReply() {
       activeReply = null;
       document.getElementById("replyPreviewBar").classList.add("hidden");
-    }
-
-    function insertEmoji(emoji) {
-      const inp = document.getElementById("chatInput");
-      inp.value += emoji;
-      inp.focus();
     }
 
     async function sendChatMessage() {
       const inp = document.getElementById("chatInput");
       const text = inp.value.trim();
       if (!text) return;
-
-      const payload = {
-        text: text,
-        reply: activeReply
-      };
-
       inp.value = "";
+
+      const reply = activeReply;
       cancelReply();
+
+      // Check for Gemini AI Command (/ai)
+      if (text.startsWith("/ai ")) {
+        const query = text.replace("/ai ", "").trim();
+        // Insert user prompt first
+        await sb.from('messages').insert([{
+          room_id: currentRoom,
+          user_email: currentUser.email,
+          message: JSON.stringify({ text, reply, type: 'text' })
+        }]);
+
+        // Call Gemini
+        callGeminiBot(query);
+        return;
+      }
 
       await sb.from('messages').insert([{
         room_id: currentRoom,
         user_email: currentUser.email,
-        message: JSON.stringify(payload)
+        message: JSON.stringify({ text, reply, type: 'text' })
       }]);
     }
 
-    // --- FEED & POSTS ---
+    // --- GEMINI IN-CHAT AI BOT ---
+    async function callGeminiBot(promptText) {
+      try {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-latest:generateContent?key=${GEMINI_API_KEY}`;
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: `Answer concisely as Pulse AI software bot: ${promptText}` }] }]
+          })
+        });
+        const data = await res.json();
+        const aiAnswer = data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't generate an answer.";
+
+        await sb.from('messages').insert([{
+          room_id: currentRoom,
+          user_email: 'pulse-ai@system',
+          message: JSON.stringify({ text: aiAnswer, type: 'text' })
+        }]);
+      } catch (err) {
+        console.error("Gemini Bot Error:", err);
+      }
+    }
+
+    // --- AUDIO VOICE NOTES (WhatsApp Style) ---
+    async function toggleAudioRecording() {
+      const btn = document.getElementById("recordBtn");
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+
+          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+          mediaRecorder.onstop = async () => {
+            const blob = new Blob(audioChunks, { type: 'audio/webm' });
+            const reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = async () => {
+              const base64Audio = reader.result;
+              await sb.from('messages').insert([{
+                room_id: currentRoom,
+                user_email: currentUser.email,
+                message: JSON.stringify({ audio: base64Audio, type: 'audio' })
+              }]);
+            };
+          };
+
+          mediaRecorder.start();
+          isRecording = true;
+          btn.innerText = "🛑 Stop";
+          btn.className = "p-2 bg-rose-600 text-white rounded-xl animate-pulse";
+        } catch (e) {
+          alert("Microphone permission denied or unsupported.");
+        }
+      } else {
+        mediaRecorder.stop();
+        isRecording = false;
+        btn.innerText = "🎤";
+        btn.className = "p-2 bg-[#1B2232] text-slate-300 rounded-xl";
+      }
+    }
+
+    // --- INTERACTIVE POLLS (Telegram Style) ---
+    function openPollModal() { document.getElementById("pollModal").classList.remove("hidden"); }
+    function closePollModal() { document.getElementById("pollModal").classList.add("hidden"); }
+
+    async function submitPoll() {
+      const q = document.getElementById("pollQuestion").value.trim();
+      const o1 = document.getElementById("pollOpt1").value.trim();
+      const o2 = document.getElementById("pollOpt2").value.trim();
+      if (!q || !o1 || !o2) return alert("Fill question and both options");
+
+      closePollModal();
+      document.getElementById("pollQuestion").value = "";
+      document.getElementById("pollOpt1").value = "";
+      document.getElementById("pollOpt2").value = "";
+
+      await sb.from('messages').insert([{
+        room_id: currentRoom,
+        user_email: currentUser.email,
+        message: JSON.stringify({
+          type: 'poll',
+          question: q,
+          opt1: o1,
+          opt2: o2,
+          votes1: 0,
+          votes2: 0
+        })
+      }]);
+    }
+
+    async function votePoll(messageId, optNum) {
+      const { data } = await sb.from('messages').select('message').eq('id', messageId).single();
+      if (!data) return;
+      let payload = parsePayload(data.message);
+      if (optNum === 1) payload.votes1 = (payload.votes1 || 0) + 1;
+      if (optNum === 2) payload.votes2 = (payload.votes2 || 0) + 1;
+
+      await sb.from('messages').update({ message: JSON.stringify(payload) }).eq('id', messageId);
+      joinChatRoom(currentRoom);
+    }
+
+    // --- WEBRTC CALLING & SCREEN SHARE (Discord Style) ---
+    function setupSignaling() {
+      callBroadcastChannel = sb.channel('pulse-signaling')
+        .on('broadcast', { event: 'call-signal' }, async payload => {
+          const { sender, data } = payload.payload;
+          if (sender === currentUser.email) return;
+
+          if (data.type === 'offer') {
+            const accept = confirm(`Incoming call from @${sender.split('@')[0]}. Join?`);
+            if (accept) {
+              document.getElementById("callModal").classList.remove("hidden");
+              await initPeerConnection();
+              await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+              const answer = await peerConnection.createAnswer();
+              await peerConnection.setLocalDescription(answer);
+              sendSignal({ type: 'answer', answer });
+            }
+          } else if (data.type === 'answer') {
+            if (peerConnection) {
+              await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+            }
+          } else if (data.type === 'candidate') {
+            if (peerConnection && data.candidate) {
+              try { await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate)); } catch(e){}
+            }
+          } else if (data.type === 'hangup') {
+            endCall(false);
+          }
+        }).subscribe();
+    }
+
+    function sendSignal(data) {
+      if (callBroadcastChannel) {
+        callBroadcastChannel.send({
+          type: 'broadcast',
+          event: 'call-signal',
+          payload: { sender: currentUser.email, data }
+        });
+      }
+    }
+
+    async function startVideoCall() {
+      document.getElementById("callModal").classList.remove("hidden");
+      await initPeerConnection();
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+      sendSignal({ type: 'offer', offer });
+    }
+
+    async function initPeerConnection() {
+      peerConnection = new RTCPeerConnection(rtcConfig);
+
+      localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+      document.getElementById("localVideo").srcObject = localStream;
+
+      localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+
+      peerConnection.ontrack = e => {
+        document.getElementById("remoteVideo").srcObject = e.streams[0];
+      };
+
+      peerConnection.onicecandidate = e => {
+        if (e.candidate) sendSignal({ type: 'candidate', candidate: e.candidate });
+      };
+    }
+
+    function toggleAudioTrack() {
+      if (!localStream) return;
+      const track = localStream.getAudioTracks()[0];
+      if (track) {
+        track.enabled = !track.enabled;
+        document.getElementById("muteMicBtn").innerText = track.enabled ? "🎙️ Mute" : "🔇 Unmuted";
+      }
+    }
+
+    function toggleVideoTrack() {
+      if (!localStream) return;
+      const track = localStream.getVideoTracks()[0];
+      if (track) {
+        track.enabled = !track.enabled;
+        document.getElementById("camToggleBtn").innerText = track.enabled ? "📷 Cam Off" : "📷 Cam On";
+      }
+    }
+
+    async function shareScreen() {
+      try {
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        const screenTrack = screenStream.getVideoTracks()[0];
+        const sender = peerConnection.getSenders().find(s => s.track.kind === 'video');
+        if (sender) sender.replaceTrack(screenTrack);
+        document.getElementById("localVideo").srcObject = screenStream;
+        screenTrack.onended = () => {
+          const origTrack = localStream.getVideoTracks()[0];
+          if (sender) sender.replaceTrack(origTrack);
+          document.getElementById("localVideo").srcObject = localStream;
+        };
+      } catch (e) {}
+    }
+
+    function endCall(sendBroadcast = true) {
+      if (sendBroadcast) sendSignal({ type: 'hangup' });
+      if (peerConnection) { peerConnection.close(); peerConnection = null; }
+      if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
+      document.getElementById("callModal").classList.add("hidden");
+    }
+
+    // --- COMMUNITY FEED & COMMENTS DRAWER (Twitter Style) ---
     function addHashtag(tag) {
       const el = document.getElementById("postContent");
       el.value = el.value + " " + tag;
@@ -419,16 +663,17 @@
     }
 
     async function loadPosts() {
-      const { data } = await sb.from('posts').select('*').order('created_at', { ascending: false }).limit(25);
+      const { data } = await sb.from('posts').select('*').order('created_at', { ascending: false }).limit(30);
       renderPosts(data || []);
     }
 
     function renderPosts(posts) {
       const list = document.getElementById("postsList");
       if (posts.length === 0) {
-        list.innerHTML = `<div class="text-xs text-center text-slate-500 py-10">No pulse yet. Be the first to share an update!</div>`;
+        list.innerHTML = `<div class="text-xs text-center text-slate-500 py-10">No pulses found.</div>`;
         return;
       }
+
       list.innerHTML = posts.map(p => {
         const sender = p.user_email?.split('@')[0] || 'dev';
         const time = new Date(p.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -436,20 +681,36 @@
         let formatted = p.content.replace(/#([a-zA-Z0-9_-]+)/g, '<span class="text-emerald-400 font-semibold">#$1</span>');
 
         return `
-          <article class="bg-[#121620] border border-[#222838] p-4 rounded-2xl shadow-md hover:border-[#2F374C] transition">
+          <article class="bg-[#0F141E] border border-[#1E2638] p-4 rounded-2xl shadow">
             <div class="flex items-center justify-between mb-2">
               <div class="flex items-center gap-2">
                 <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs uppercase">${sender[0]}</div>
                 <div>
-                  <span class="text-xs font-bold text-white hover:underline cursor-pointer" onclick="mentionUser('${sender}')">@${sender}</span>
+                  <span class="text-xs font-bold text-white">@${sender}</span>
                   <span class="text-[10px] text-slate-500 block font-mono">${time}</span>
                 </div>
               </div>
-              <button onclick="likePost(${p.id}, ${likes})" class="flex items-center gap-1.5 px-2.5 py-1 bg-[#181E2C] hover:bg-[#202738] border border-[#2B3347] rounded-xl text-xs font-semibold text-slate-300 hover:text-rose-400 transition">
+              <button onclick="likePost(${p.id}, ${likes})" class="flex items-center gap-1.5 px-2.5 py-1 bg-[#161C28] hover:bg-[#202838] border border-[#242D40] rounded-xl text-xs font-semibold text-rose-400">
                 <span>❤️</span> <span>${likes}</span>
               </button>
             </div>
-            <p class="text-sm text-slate-200 leading-relaxed break-words">${formatted}</p>
+            <p class="text-sm text-slate-200 leading-relaxed mb-3 break-words">${formatted}</p>
+
+            <!-- Thread Comments Toggle -->
+            <div class="pt-2 border-t border-[#182030] flex items-center justify-between">
+              <button onclick="toggleComments(${p.id})" class="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1 font-semibold">
+                💬 Comments Thread
+              </button>
+            </div>
+
+            <!-- Comments Drawer -->
+            <div id="comments-${p.id}" class="hidden mt-3 pt-3 border-t border-[#182030] space-y-2">
+              <div id="commentList-${p.id}" class="space-y-1.5 text-xs text-slate-300"></div>
+              <div class="flex gap-2 pt-1">
+                <input id="commentInp-${p.id}" type="text" placeholder="Write a comment..." class="flex-1 p-2 bg-[#161C28] border border-[#242D40] rounded-xl text-xs text-white outline-none" />
+                <button onclick="submitComment(${p.id})" class="px-3 bg-emerald-500 text-slate-950 rounded-xl text-xs font-bold">Post</button>
+              </div>
+            </div>
           </article>
         `;
       }).join('');
@@ -468,8 +729,44 @@
       loadPosts();
     }
 
+    async function toggleComments(postId) {
+      const drawer = document.getElementById(`comments-${postId}`);
+      drawer.classList.toggle("hidden");
+      if (!drawer.classList.contains("hidden")) {
+        loadComments(postId);
+      }
+    }
+
+    async function loadComments(postId) {
+      const box = document.getElementById(`commentList-${postId}`);
+      const { data } = await sb.from('messages').select('*').eq('room_id', `post_${postId}`).order('created_at', { ascending: true });
+      if (data && data.length > 0) {
+        box.innerHTML = data.map(c => `
+          <div class="p-2 bg-[#141A26] rounded-xl flex items-center justify-between">
+            <span class="text-slate-300"><b class="text-emerald-400">@${c.user_email.split('@')[0]}:</b> ${c.message}</span>
+            <span class="text-[9px] text-slate-500 font-mono">${new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          </div>
+        `).join('');
+      } else {
+        box.innerHTML = `<span class="text-[11px] text-slate-500">No comments yet. Be first!</span>`;
+      }
+    }
+
+    async function submitComment(postId) {
+      const inp = document.getElementById(`commentInp-${postId}`);
+      const txt = inp.value.trim();
+      if (!txt) return;
+      inp.value = "";
+      await sb.from('messages').insert([{
+        room_id: `post_${postId}`,
+        user_email: currentUser.email,
+        message: txt
+      }]);
+      loadComments(postId);
+    }
+
     function setupRealtimePosts() {
-      sb.channel('realtime-feed')
+      sb.channel('realtime-feed-updates')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'posts' }, () => {
           loadPosts();
         }).subscribe();
